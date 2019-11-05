@@ -1,0 +1,2 @@
+<!--miniprogram/pages/huijiBuyInfo/huijiBuyInfo.wxml-->
+<text wx:for="{{tableInfo}}" wx:key="_id" style="display: block;"> phoneNumber:{{item.phoneNumber}} \n inviteCode:{{item.inviteCode}}\n  useState:{{item.useState}} \n\n</text>

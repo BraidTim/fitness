@@ -1,0 +1,48 @@
+<!--miniprogram/pages/gymDetail/gymDetail.wxml-->
+
+<view class="vmain">
+  <view class="head">
+
+    <text style="color:#FFFFFF;  text-align: center;">健身房信息</text>
+  </view>
+  <!--
+  <view class="simg clearfix">
+    <image src="{{gymInfo.gymPhoto}}"/>
+  </view>-->
+<swiper class="simg clearfix" indicator-dots="true" autoplay="true" interval="5000" duration="1000">
+  <block wx:for="{{picList}}" wx:key="index">
+    <swiper-item>
+      <image src="{{item}}" class="slide-image" mode="aspectFill" bindtap='previewImg' data-previewurl='{{picList}}'
+      data-currenturl='{{item}}'/>
+    </swiper-item>   
+  </block>  
+</swiper>
+  <view class="tit">{{gymInfo.gymDetail}}</view>
+
+  <view>{{gymInfo.info}}</view>
+
+</view>
+<view class="inx">
+  <view class="main_block" bindtap="toMap">
+    <view class="ti">
+      <image src="../../images/ico1.png" style='width:50rpx;height:50rpx;' />
+    </view>
+    <view class="ci">{{gymInfo.gymAddress}}</view>
+    <view class="goto">
+      <image src="../../images/goto.png" style='width:50rpx;height:50rpx;' />
+    </view>
+  </view>
+
+  <view class="main_block" bindtap="toCall">
+    <view class="ti_p">
+      <image src="../../images/ico2.png" style='width:50rpx;height:50rpx;' />
+    </view>
+    <view class="ci">{{gymInfo.gymPhone}}</view>
+
+  </view>
+  <view style="clear:both;">
+  </view>
+</view>
+<view wx:if="{{type=='sell'}}" type="primary" bindtap="sell" class="btn">分享</view>
+<view wx:else="{{type=='buy'}}" type="primary" bindtap="buy" class="btn">体验</view>
+<view  >注:为了增加分享者和体验者的积极性，体验需要少量费用，且该费用会全额返还给分享者</view>

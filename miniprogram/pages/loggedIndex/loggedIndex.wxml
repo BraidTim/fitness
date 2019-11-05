@@ -1,0 +1,18 @@
+<!--<view class="img"><image src="../../images/img1.png"/></view>-->
+    <view class="simg clearfix" ><image style="width:100%" src="../../images/banner.png"/></view>
+    
+<button bindtap="gymList" class="left" style="background-image: url('https://6d65-meeu-0624-1259514512.tcb.qcloud.la/img1.png?sign=679d3f9b32ad1f6cecfb78f1ab7d83ce&t=1570721361'); background-size: 100% 100%;">
+
+  <view class="ico1">
+    <image src="../../images/ico1.png" style='width:80rpx;height:80rpx;' />
+  </view>
+  <view class="ti">健身房</view>
+</button>
+
+<button bindtap="myInfo" class="right" style="background-image: url('https://6d65-meeu-0624-1259514512.tcb.qcloud.la/img2.png?sign=4774394bd927aae5e4a6595930b27969&t=1570720876'); background-size: 100% 100%;">
+  <view class="ico2">
+    <image src="../../images/ico2.png" style='width:80rpx;height:80rpx;margin-top:20%;' />
+  </view>
+  <view class="ti">我的信息</view>
+</button>
+ <button bindtap="huijiMenu" class="mbtn mt10"><a href="#" class="btn">会籍菜单</a></button>

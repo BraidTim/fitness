@@ -1,0 +1,90 @@
+<!--miniprogram/pages/myInfo/myInfo.wxml-->
+
+
+<view class="flex-wrp" style="flex-direction:row;">
+  <view class="leftImage">
+    <open-data type="userAvatarUrl" style='width:150rpx;height:150rpx;'></open-data>
+    <!--<image src="../../images/userimg.png" style='width:150rpx;height:150rpx;' />-->
+  </view>
+
+  <view class="rightText">
+    <view class="ti">
+      <open-data type="userNickName"></open-data>
+    </view>
+    <view class="mt5">
+      <open-data type="userCity"></open-data>
+    </view>
+  </view>
+</view>
+
+<view class="balance" style="flex-direction:row;">
+
+  <view class="leftIcon">
+    <image src="../../images/ico3.png" style='width:50rpx;height:50rpx;' />
+  </view>
+  <view class="middleText">提现到余额</view>
+  <view class="rightGoto">
+    <image src="../../images/goto.png" style='width:40rpx;height:40rpx;' />
+  </view>
+
+</view>
+<view class="buyHis" bindtap="showBuyHis" style="flex-direction:row;">
+  <view class="leftIcon">
+    <image src="../../images/ico4.png" style='width:50rpx;height:50rpx;' />
+  </view>
+  <view class="middleText">购买历史</view>
+  <view class="rightGoto">
+    <image src="../../images/top.png" style='width:40rpx;height:40rpx;' />
+  </view>
+</view>
+<view class="buyHisList" style="display:{{dis}}">
+  <view class="cur" wx:for="{{boughtList}}" data-hi="{{item.gym}}" bindtap="tapBought">
+
+    <view class="leftIcon">
+      <image src="../../images/lo1.png" style='width:50rpx;height:50rpx;' />
+    </view>
+    <view class="middleText2">
+      <view class="gray9">{{item.buyDate}}</view>
+    </view>
+    <view class="rightState" wx:if="{{item.useState == 0}}" style="color:green;">未使用</view>
+    <view class="rightState" wx:else="{{item.useState == 1}}" style="color:yellow;">已使用</view>
+
+  </view>
+
+</view>
+<view class="buyHis" bindtap="showShareHis" style="flex-direction:row;">
+  <view class="leftIcon">
+    <image src="../../images/ico5.png" style='width:50rpx;height:50rpx;' />
+  </view>
+  <view class="middleText">分享历史</view>
+  <view class="rightGoto">
+    <image src="../../images/top.png" style='width:40rpx;height:40rpx;' />
+  </view>
+</view>
+<view class="buyHisList" style="display:{{dis2}}">
+  <view class="cur" wx:for="{{sharedList}}" data-hi="{{item.gym}}" bindtap="tapShared">
+
+
+    <view class="leftIcon">
+      <image src="../../images/lo1.png" style='width:50rpx;height:50rpx;'>{{item.gym}}</image>
+    </view>
+    <view class="middleText2">
+      <view class="gray9">{{item.shareDate}}</view>
+    </view>
+    
+    <view class="rightState" wx:if="{{item.shareState == 1}}" style="color:green;">分享中</view>
+    <view class="rightState" wx:if="{{item.shareState == 2}}" style="color:red;">暂停</view>
+    <view class="rightState" wx:if="{{item.shareState == 3}}" style="color:yellow;">已过期</view>
+
+
+
+  </view>
+
+</view>
+<!--
+<view class="allInfo">{{myInfo}}</view>
+<view bindtap="sharedList" class="list">sharedList</view>
+<view wx:for="{{sharedList}}" data-hi="{{item.gym}}" bindtap="tapShared">{{item.gym}}</view>
+<view bindtap="boughtList" class="list">boughtList</view>
+<view wx:for="{{boughtList}}" data-hi="{{item.gym}}" bindtap="tapBought">{{item.gym}}</view>
+-->

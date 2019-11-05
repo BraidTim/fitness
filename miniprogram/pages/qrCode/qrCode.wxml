@@ -1,0 +1,9 @@
+<view>{{message}}</view>
+<canvas class='canvas' canvas-id='canvas'></canvas>
+
+<view>二维码入场凭证</view>
+<view>分享者：{{inviteCode}}</view>
+<view>接受者：{{phoneNumber}}</view>
+<view>gym：{{gym}}</view>
+<view>日期：{{date}}</view>
+<button bindtap="check">CheckState</button>

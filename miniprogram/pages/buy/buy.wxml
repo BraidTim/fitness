@@ -1,0 +1,35 @@
+<!--miniprogram/pages/buy/buy.wxml-->
+<view>接受分享</view>
+<view>一些说明 blablabla</view>
+<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">请点此处授权</button>
+<view>{{phoneNumber}}</view>
+<form bindsubmit="search">
+<view class="page-section">
+    <view class="weui-cells__title">此处输入邀请码（暂时直接用分享者的手机号）</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input" name = "inviteCode" auto-focus placeholder="将会获取焦点" value="{{inviteCode}}"/>
+      </view>
+    </view>
+  </view>
+<view class="btn-area">
+
+    <button form-type="submit">点击查询</button>
+  </view>
+</form>
+
+<view>{{Next}}</view>
+
+<form bindsubmit="buy" >
+<checkbox-group  name="checkBox">
+  <label class="checkbox" wx:for="{{items}}">
+    <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+  </label>
+</checkbox-group>
+<view class="btn-area">
+    <button form-type="submit" type="primary">接受分享</button>
+  </view>
+</form>
+<button form-type="submit" bindtap="query">查询分享历史</button>
+<view>{{sharedMessage}}</view>
+

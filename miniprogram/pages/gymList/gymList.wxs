@@ -1,0 +1,11 @@
+
+function tapName(event, ownerInstance) {
+  console.log('tap wechat', JSON.stringify(event))
+  console.log(app.global.openid)
+  wx.navigateTo({
+    url: '/pages/gymDetail/gymDetail?name='+event.dataset.hi,
+  })
+}
+module.exports = {
+  tapName: tapName
+}

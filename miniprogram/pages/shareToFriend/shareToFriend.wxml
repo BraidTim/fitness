@@ -1,0 +1,7 @@
+<view class="view">
+  <view>{{inviteCode}}</view>
+  <view>{{gym}}</view>
+
+  <image class="cover-9" src="{{img}}" bindtap="img"></image>
+  <button type="primary" open-type="share" data-name="pageShare" id="share">点击发送给好友</button>
+</view>

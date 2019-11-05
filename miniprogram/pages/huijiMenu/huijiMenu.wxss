@@ -1,0 +1,57 @@
+/* miniprogram/pages/myInfo/myInfo.wxss */
+.allInfo{
+  word-wrap: break-word;
+  word-break: normal;
+}
+.list{
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  border-style:solid;
+}
+
+.mt5 { margin-top:5px }
+.ti{ font-size:20px; margin:auto auto 5px}
+.clearfix {
+   
+   background: #ffcc01;
+   }
+.flex-wrp {display: flex;width: 100%;height:200rpx;background:#ffcc01}
+.leftImage {width:150rpx;height:150rpx; margin-left: 25rpx;
+  margin-top: 25rpx; border-radius:75rpx;}
+.rightText {width:80%;margin-left: 60rpx;
+  margin-top: 40rpx; }
+  .balance{
+    display: flex;width: 100%;height:75rpx;margin: 30rpx;  border-bottom: 1px solid #e9e9e9;
+    border-top: 1px solid #e9e9e9;
+
+  }
+  .buyHis{
+    display: flex;width: 100%;height:75rpx;margin: 30rpx;  border-bottom: 1px solid #e9e9e9;
+    border-top: 1px solid #e9e9e9;
+
+  }
+  .cur{
+    display: flex;width: 100%;height:75rpx;margin: 30rpx;  border-bottom: 1px solid #e9e9e9;
+    border-top: 1px solid #e9e9e9;
+
+  }
+  .leftIcon{
+    width:10%; margin-left: 7.5rpx;
+  margin-top: 7.5rpx;
+  }
+  .middleText{
+    width: 80%;margin-left: 10rpx;
+  margin-top: 7.5rpx;
+  }
+  .middleText2{
+    width: 70%;margin-left: 10rpx;
+  margin-top: 7.5rpx;
+  }
+  .rightGoto{
+    width:10%; margin-left: 12.5rpx;
+  margin-top: 12.5rpx;
+  }
+   .rightState{
+    width:20%; margin-left: 12.5rpx;
+  margin-top: 12.5rpx;
+  }

@@ -1,0 +1,26 @@
+[
+  {
+    "name": "insert",
+    "value": {
+      "method": "insert",
+      "datasetName": "counters",
+      "newKeys": "newValue"
+    }
+  },
+  {
+    "name": "select",
+    "value": {
+      "method": "select",
+      "datasetName": "counters",
+      "testKey": "testValue"
+    }
+  },
+  {
+    "name": "177sel",
+    "value": {
+      "method": "select",
+      "datasetName": "vip",
+      "phoneNumber": "17797550910"
+    }
+  }
+]

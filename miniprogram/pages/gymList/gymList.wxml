@@ -1,0 +1,4 @@
+<!--miniprogram/pages/gymList/gymList.wxml-->
+<view>Name: {{gymList}}</view>
+<view>Phone: {{phone}}</view>
+<view>Address: {{address}}</view>

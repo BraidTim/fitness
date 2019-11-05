@@ -1,0 +1,32 @@
+@charset "utf-8"; 
+/* CSS Document */
+/* webkit*/
+.left {
+    float: left;
+    width: 45%;
+    height: 150px;
+    margin-left: 2.5%;
+    margin-top: 2.5%;
+
+    
+}
+.right {
+    margin-left: 52.5%;
+    width: 45%;
+        height: 150px;
+    margin-top: 2.5%;
+
+}
+ .ico1{text-align: center;    margin-top: 20%;
+}
+ .ico2{text-align: center;   
+}
+.ti{color:#ffcc01; font-size:20px; text-align: center;}
+ .ci{color:#827d76;text-align: center;}
+
+ .mbtn{padding:20px 20px 20px}
+.btn{background:#ffcc01; color:#333; font-size:18px; display:block; padding:15px 0; text-align:center;
+-moz-border-radius:100px;
+-webkit-border-radius:100px;
+border-radius:100px;
+}

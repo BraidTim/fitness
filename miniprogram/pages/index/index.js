@@ -1,120 +1,217 @@
-//index.js
+// miniprogram/index/index.js
+
 const app = getApp()
 
 Page({
   data: {
-    avatarUrl: './user-unlogin.png',
-    userInfo: {},
-    logged: false,
-    takeSession: false,
-    requestResult: ''
+    loadingShare:false,
+    loadingBuy:false,
+    checkAuth : true,
+    checking:"查询会员中..."
+
   },
+  admin: function () {
+    wx.navigateTo({
+      url: '../admin/admin',
+    })
+  },
+  share: function () {
+    this.setData({loadingShare:true})
+    wx.navigateTo({
+      url: '../share/share',
+    })
+    this.setData({ loadingShare: false })    
+  },
+  buy: function () {
+    this.setData({ loadingBuy: true })
+    wx.navigateTo({
+      url: '../buy/buy',
+    })
+    this.setData({ loadingBuy: false })
+  },
+  getPhoneNumber(e) {
+    console.log(e)
+    console.log("sessionKey")
+    console.log(app.globalData.sessionKey)
+    var phoneData = e
 
-  onLoad: function() {
-    if (!wx.cloud) {
-      wx.redirectTo({
-        url: '../chooseLib/chooseLib',
-      })
-      return
-    }
+    var that = this
 
-    // 获取用户信息
-    wx.getSetting({
+    wx.cloud.callFunction({
+      name: 'phone',
+      data: {
+        sessionKey: app.globalData.sessionKey,
+        encryptedData: phoneData.detail.encryptedData,
+        iv: phoneData.detail.iv
+      },
       success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo
+        console.log("final result")
+        console.log(res.result.x.phoneNumber)
+        app.globalData.phoneNumber = res.result.x.phoneNumber
+        wx.cloud.callFunction({
+          name: "cloudDb",
+          data: {
+            datasetName: "memberList",
+            method: "select",
+            phoneNumber: app.globalData.phoneNumber
+          },
+          success: function (res) {
+            console.log(res)
+            if (res.result.respond.data.length != 0) {
+              app.globalData.huijiPhoneNumber = res.result.respond.data[0].huijiPhoneNumber
+              app.globalData.myInfo = res.result.respond.data[0]
+              //app.globalData.phoneNumber = res.result.respond.data[0].phoneNumber
+              wx.cloud.callFunction({
+                name: "cloudDb",
+                data: {
+                  datasetName: "memberList",
+                  method: "update",
+                  phoneNumber: app.globalData.phoneNumber,
+                  newValue:{
+                    openid: app.globalData.openid
+                  }
+                },
+                success:function(res){
+                  wx.navigateTo({
+                    url: '/pages/loggedIndex/loggedIndex',
+                  })
+                }
+              })
+              
+            }else{
+              wx.cloud.callFunction({
+                name: "cloudDb",
+                data: {
+                  datasetName: "memberList",
+                  method: "insert",
+                  phoneNumber: app.globalData.phoneNumber,
+                  openid: app.globalData.openid,
+                  name:"",
+                  character:3
+                  
+                },
+                success: function (res) {
+                  wx.navigateTo({
+                    url: '/pages/loggedIndex/loggedIndex',
+                  })
+                }
               })
             }
+          }
+        })
+        that.setData({ phoneNumber: res.result.x.phoneNumber })
+        that.setData({ phoneButton: true })
+      },
+      fail: err => {
+        console.log('fail phone')
+        console.log(sessionKey)
+        console.log(phoneData.detail.encryptedData)
+        console.log(phoneData.detail.iv)
+      }
+    })
+  },
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {    
+    var that = this
+    that.setData({checkAuth:true})
+    wx.login({
+      success(ress) {
+        console.log("logined")
+        console.log(ress)
+        var sessionKey = ''
+        if (ress.code) {
+          wx.cloud.callFunction({
+            name: 'decode',
+            data: {
+              code: ress.code
+            },
+            success: res => {
+              app.globalData.openid = JSON.parse(res.result.temp).openid
+              app.globalData.sessionKey = JSON.parse(res.result.temp).session_key
+              wx.cloud.callFunction({
+                name:"cloudDb",
+                data:{
+                  datasetName:"memberList",
+                  method:"select",
+                  openid: app.globalData.openid
+                },
+                success:function(res){
+                  console.log(res)
+                  if(res.result.respond.data.length!=0){
+                    app.globalData.phoneNumber = res.result.respond.data[0].phoneNumber
+                    app.globalData.huijiPhoneNumber = res.result.respond.data[0].huijiPhoneNumber
+                    app.globalData.myInfo = res.result.respond.data[0]
+                    wx.navigateTo({
+                      url: '/pages/loggedIndex/loggedIndex',
+                    })
+                  } else{
+                    that.setData({checkAuth:false})
+                    that.setData({ checking: "没找到记录，如果是初次试用请授权！" })
+
+                    console.log(that.data)
+                  }
+                }
+              })
+            },
+            fail: err => {
+              console.log('fail decode')
+            }
           })
+        } else {
+          console.log('登录失败！' + res.errMsg)
         }
       }
     })
   },
 
-  onGetUserInfo: function(e) {
-    if (!this.logged && e.detail.userInfo) {
-      this.setData({
-        logged: true,
-        avatarUrl: e.detail.userInfo.avatarUrl,
-        userInfo: e.detail.userInfo
-      })
-    }
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+
   },
 
-  onGetOpenid: function() {
-    // 调用云函数
-    wx.cloud.callFunction({
-      name: 'login',
-      data: {},
-      success: res => {
-        console.log('[云函数] [login] user openid: ', res.result.openid)
-        app.globalData.openid = res.result.openid
-        wx.navigateTo({
-          url: '../userConsole/userConsole',
-        })
-      },
-      fail: err => {
-        console.error('[云函数] [login] 调用失败', err)
-        wx.navigateTo({
-          url: '../deployFunctions/deployFunctions',
-        })
-      }
-    })
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+
   },
 
-  // 上传图片
-  doUpload: function () {
-    // 选择图片
-    wx.chooseImage({
-      count: 1,
-      sizeType: ['compressed'],
-      sourceType: ['album', 'camera'],
-      success: function (res) {
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
 
-        wx.showLoading({
-          title: '上传中',
-        })
-
-        const filePath = res.tempFilePaths[0]
-        
-        // 上传图片
-        const cloudPath = 'my-image' + filePath.match(/\.[^.]+?$/)[0]
-        wx.cloud.uploadFile({
-          cloudPath,
-          filePath,
-          success: res => {
-            console.log('[上传文件] 成功：', res)
-
-            app.globalData.fileID = res.fileID
-            app.globalData.cloudPath = cloudPath
-            app.globalData.imagePath = filePath
-            
-            wx.navigateTo({
-              url: '../storageConsole/storageConsole'
-            })
-          },
-          fail: e => {
-            console.error('[上传文件] 失败：', e)
-            wx.showToast({
-              icon: 'none',
-              title: '上传失败',
-            })
-          },
-          complete: () => {
-            wx.hideLoading()
-          }
-        })
-
-      },
-      fail: e => {
-        console.error(e)
-      }
-    })
   },
 
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+
+  }
 })

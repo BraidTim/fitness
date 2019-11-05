@@ -1,0 +1,2 @@
+<!--miniprogram/pages/huijiShareInfo/huijiShareInfo.wxml-->
+<text wx:for="{{tableInfo}}" wx:key="_id" style="display: block;"> phoneNumber:{{item.phoneNumber}} \n   gym:{{item.gym}} \n\n</text>

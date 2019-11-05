@@ -1,0 +1,32 @@
+<view class="main">
+  <image class="bg" src="../../images/bg.jpg"></image>
+  <view class="context">
+    <view>授权手机号查询您可共享的健身房，请确保在参与活动的健身房里有会员资格</view>
+    <button bindtap="gymList">查看健身房列表>></button>
+    <button class="bt1" open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="primary">点此处授权</button>
+    <view>您的手机号码：</view>
+    <view>{{phoneH3}}XXXX{{phoneT4}}</view>
+
+    <view>选择您要分享的健身房</view>
+
+    <form bindsubmit="formSubmit" >
+    <checkbox-group bindchange="checkboxChange" name="checkBox">
+      <label class="checkbox" wx:for="{{items}}">
+        <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+      </label>
+    </checkbox-group>
+    <!-- <view class="section section_gap">
+        <view class="section__title">备选参数</view>
+        <radio-group name="radio-group">
+          <label><radio value="radio1"/>para1</label>
+          <label><radio value="radio2"/>para2</label>
+        </radio-group>
+      </view> -->
+    <view class="btn-area">
+        <button class="bt1" form-type="submit" type="primary" disabled="{{shareDisable}}">确认分享</button>
+      </view>
+    </form>
+    <button class="bt1" bindtap="showRecord" type="primary">查看分享记录</button>
+  </view>
+</view>
+
