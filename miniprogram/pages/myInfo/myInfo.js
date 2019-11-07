@@ -11,6 +11,18 @@ Page({
     boughtList:"",
     dis:"block",
     dis2: "block",
+    icon:true,
+  },
+  toLogin:function(event){
+    wx.navigateTo({
+      url: '/pages/index/index',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+      },
+      success: function (res) {
+
+      }
+    })
   },
   showBuyHis: function (event) {
     if(this.data.dis=="block"){
@@ -87,6 +99,9 @@ Page({
     })
   },
   onLoad: function (options) {
+    console.log("-------global--------")
+    console.log(app.globalData)
+    this.setData({icon:app.globalData.hasOwnProperty('phoneNumber')})
     var that = this
     this.setData({myInfo:JSON.stringify(app.globalData.myInfo)})
     console.log("stopped?")
@@ -106,6 +121,7 @@ Page({
    */
   onShow: function () {
     this.getSharedBoughtList()
+    this.setData({ icon: app.globalData.hasOwnProperty('phoneNumber') })
 
   },
 

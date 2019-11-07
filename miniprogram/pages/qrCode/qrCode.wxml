@@ -19,17 +19,17 @@
 
 </view>
 <view class="inx">
-  <view class="main_block" bindtap="#">
+  <view class="main_block" bindtap="toMap">
     <view class="ti">
       <image src="../../images/ico1.png" style='width:50rpx;height:50rpx;' />
     </view>
-    <view class="ci">{{gymAddress}}</view>
+    <view class="ci" >{{gymAddress}}</view>
     <view class="goto">
       <image src="../../images/goto.png" style='width:50rpx;height:50rpx;' />
     </view>
   </view>
 
-  <view class="main_block" bindtap="#">
+  <view class="main_block" bindtap="toCall">
     <view class="ti_p">
       <image src="../../images/ico2.png" style='width:50rpx;height:50rpx;' />
     </view>

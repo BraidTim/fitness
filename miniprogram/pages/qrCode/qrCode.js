@@ -13,6 +13,25 @@ Page({
     gymAddress:"",
     gymPhone:""
   },
+  toCall: function () {
+    wx.makePhoneCall({
+      phoneNumber: this.data.gymInfo.gymPhone //仅为示例，并非真实的电话号码
+    })
+  },
+  toMap: function () {
+    wx.navigateTo({
+      url: '/pages/map/map',
+      events: {
+        // acceptDataFromOpenedPage: function (data) {
+        //   console.log(data)
+        // }
+      },
+      success: function (res) {
+        // res.eventChannel.emit('acceptDataFromOpenerPage', {
+        //   inviteCode:that.data.inviteCode,pnhoneNumber:that.data.phoneNumber, gym:that.data.gym.value})
+      }
+    })
+  },
   backHome: function (option) {
     wx.navigateTo({
       url: '/pages/loggedIndex/loggedIndex',

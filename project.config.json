@@ -13,7 +13,7 @@
 	},
 	"appid": "wx2c2bdfe3e7a50db2",
 	"projectname": "fitness",
-	"libVersion": "2.7.4",
+	"libVersion": "2.9.2",
 	"simulatorType": "wechat",
 	"simulatorPluginLibVersion": {},
 	"cloudfunctionTemplateRoot": "cloudfunctionTemplate",

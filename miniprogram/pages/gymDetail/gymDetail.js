@@ -7,7 +7,8 @@ Page({
    */
   data: {
     gymInfo:{},
-    type:""
+    type:"",
+    icon:false,
   },
   toCall:function(){
     wx.makePhoneCall({
@@ -68,93 +69,106 @@ Page({
     })
   },
   buy: function (event) {
-    const db = wx.cloud.database()
-    var that = this
-    wx.cloud.callFunction({
-      name: "orderCreate",
-      data: {
-        openid: app.globalData.openid
-      },
-      success: res => {
-        var orderIdTemp = res.result.orderId
-        var prepay_id = res.result.prepay_id
-        var today = new Date()
-        var month = today.getMonth()+1
-        var pre = ''
-        if (month < 10) {
-          pre = '0'
+    if (!app.globalData.hasOwnProperty('phoneNumber')){
+      wx.navigateTo({
+        url: '/pages/index/index',
+        events: {
+          // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+        },
+        success: function (res) {
+
         }
-        var dateString = (today.getYear() + 1900).toString() + pre + (today.getMonth()+1).toString() + today.getDate().toString()
-        console.log(dateString)
-        wx.cloud.callFunction({
-          name: "cloudDb",
-          data: {
-            method: "insert",
-            datasetName: "buyInfo",
-            phoneNumber: app.globalData.phoneNumber,
-            gym: that.data.gymInfo.gymName,
-            gymAddress: that.data.gymInfo.gymAddress,
-            gymPhone: that.data.gymInfo.gymPhone,
-            gymLocation: that.data.gymInfo.gymLocation,
-            inviteCode: app.globalData.inviteCode,
-            orderId: res.result.orderId,
-            prepay_id: res.result.prepay_id,
-            payState: "0",
-            useState: "0",
-            huijiPhoneNumber: app.globalData.huijiPhoneNumberBuy,
-            buyDate: dateString,
-
-          },
-          success: res => {
+      })
+    }else{
+      const db = wx.cloud.database()
+      var that = this
+      wx.cloud.callFunction({
+        name: "orderCreate",
+        data: {
+          openid: app.globalData.openid
+        },
+        success: res => {
+          var orderIdTemp = res.result.orderId
+          var prepay_id = res.result.prepay_id
+          var today = new Date()
+          var month = today.getMonth() + 1
+          var pre = ''
+          if (month < 10) {
+            pre = '0'
           }
-        })
-        wx.requestPayment({
-          timeStamp: res.result.timeStamp,
-          nonceStr: '5K8264ILTKCH16CQ2502SI8ZNMTM67VS',
-          package: 'prepay_id=' + res.result.prepay_id,
-          signType: 'MD5',
-          paySign: res.result.paySign,
-          success: res => {
-            console.log("!!!!!!!!!!!!!!orderId")
-            console.log(res)
-            wx.showToast({
-              title: '购买成功',
-            })
-            wx.cloud.callFunction({
-              name: "message",
-              data: {
-                openid: app.globalData.openid,
-                prepay_id: prepay_id
-              },
-              success: res => {
-                console.log("message sent")
-              }
-            })
-            wx.cloud.callFunction({
-              name: "orderCheck",
-              data: {
-                orderId: orderIdTemp
-              },
-              success: res => {
-                wx.navigateTo({
-                  url: '/pages/qrCode/qrCode?phoneNumber=' + app.globalData.phoneNumber,
-                  events: {
-                    // acceptDataFromOpenedPage: function (data) {
-                    //   console.log(data)
-                    // }
-                  },
-                  success: function (res) {
-                    // res.eventChannel.emit('acceptDataFromOpenerPage', {
-                    //   inviteCode:that.data.inviteCode,pnhoneNumber:that.data.phoneNumber, gym:that.data.gym.value})
-                  }
-                })
-              }
-            })
+          var dateString = (today.getYear() + 1900).toString() + pre + (today.getMonth() + 1).toString() + today.getDate().toString()
+          console.log(dateString)
+          wx.cloud.callFunction({
+            name: "cloudDb",
+            data: {
+              method: "insert",
+              datasetName: "buyInfo",
+              phoneNumber: app.globalData.phoneNumber,
+              gym: that.data.gymInfo.gymName,
+              gymAddress: that.data.gymInfo.gymAddress,
+              gymPhone: that.data.gymInfo.gymPhone,
+              gymLocation: that.data.gymInfo.gymLocation,
+              inviteCode: app.globalData.inviteCode,
+              orderId: res.result.orderId,
+              prepay_id: res.result.prepay_id,
+              payState: "0",
+              useState: "0",
+              huijiPhoneNumber: app.globalData.huijiPhoneNumberBuy,
+              buyDate: dateString,
 
-          }
-        })
-      }
-    })
+            },
+            success: res => {
+            }
+          })
+          wx.requestPayment({
+            timeStamp: res.result.timeStamp,
+            nonceStr: '5K8264ILTKCH16CQ2502SI8ZNMTM67VS',
+            package: 'prepay_id=' + res.result.prepay_id,
+            signType: 'MD5',
+            paySign: res.result.paySign,
+            success: res => {
+              console.log("!!!!!!!!!!!!!!orderId")
+              console.log(res)
+              wx.showToast({
+                title: '购买成功',
+              })
+              wx.cloud.callFunction({
+                name: "message",
+                data: {
+                  openid: app.globalData.openid,
+                  prepay_id: prepay_id
+                },
+                success: res => {
+                  console.log("message sent")
+                }
+              })
+              wx.cloud.callFunction({
+                name: "orderCheck",
+                data: {
+                  orderId: orderIdTemp
+                },
+                success: res => {
+                  wx.navigateTo({
+                    url: '/pages/qrCode/qrCode?phoneNumber=' + app.globalData.phoneNumber,
+                    events: {
+                      // acceptDataFromOpenedPage: function (data) {
+                      //   console.log(data)
+                      // }
+                    },
+                    success: function (res) {
+                      // res.eventChannel.emit('acceptDataFromOpenerPage', {
+                      //   inviteCode:that.data.inviteCode,pnhoneNumber:that.data.phoneNumber, gym:that.data.gym.value})
+                    }
+                  })
+                }
+              })
+
+            }
+          })
+        }
+      })
+    }
+    
 
 
 
@@ -163,6 +177,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({ icon: app.globalData.hasOwnProperty('phoneNumber') })
+
     console.log("gymDetail")
     console.log(options.gymInfo.replace("%26", "&").replace("%3F", "?").replace("%3D", "="))
     this.setData({ gymInfo: JSON.parse(options.gymInfo.replace(/%26/g, "&").replace(/%3F/g, "?").replace(/%3D/g, "="))})
@@ -191,6 +207,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.setData({ icon: app.globalData.hasOwnProperty('phoneNumber') })
 
   },
 

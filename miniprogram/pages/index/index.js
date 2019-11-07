@@ -95,13 +95,17 @@ Page({
                   phoneNumber: app.globalData.phoneNumber,
                   openid: app.globalData.openid,
                   name: "",
-                  character: 3
+                  character: 3,
+                  vipGymList:[]
 
                 },
                 success: function(res) {
-                  wx.navigateTo({
-                    url: '/pages/loggedIndex/loggedIndex',
+                  wx.navigateBack({
+
                   })
+                  // wx.navigateTo({
+                  //   url: '/pages/loggedIndex/loggedIndex',
+                  // })
                 }
               })
             }
@@ -157,9 +161,14 @@ Page({
                     app.globalData.phoneNumber = res.result.respond.data[0].phoneNumber
                     app.globalData.huijiPhoneNumber = res.result.respond.data[0].huijiPhoneNumber
                     app.globalData.myInfo = res.result.respond.data[0]
+                    wx.navigateBack({
+                     
+                    })
+                    /*
                     wx.navigateTo({
                       url: '/pages/loggedIndex/loggedIndex',
                     })
+                    */
                   } else {
                     that.setData({
                       checkAuth: false

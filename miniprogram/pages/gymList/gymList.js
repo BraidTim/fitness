@@ -21,7 +21,8 @@ Page({
     sellList:"none",
 
     buyList: "block",
-
+    icon:false,
+    inviteCode:"",
   },
   clickShare: function (event) {
     this.setData({ buyColor: "white" })
@@ -150,54 +151,70 @@ Page({
     })
     
   },
+  toLogin: function (event) {
+    wx.navigateTo({
+      url: '/pages/index/index',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+      },
+      success: function (res) {
+
+      }
+    })
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var that = this
-    this.setData({ inviteCode: options.inviteCode })
+    this.setData({ icon: app.globalData.hasOwnProperty('phoneNumber') })
+    if(this.data.icon){
+      var that = this
+      this.setData({ inviteCode: options.inviteCode })
 
-    console.log(app.globalData)
-    wx.cloud.callFunction({
-      name:"cloudDb",
-      data:{
-        method:"select",
-        datasetName:"memberList",
-        phoneNumber: app.globalData.phoneNumber
-      },
-      success:res=>{
-        console.log(res)
-        var tempRes = res
-        var gyms = []
-        for(let i = 0 ; i < res.result.respond.data[0].vipGymList.length; i++){
-          gyms.push(db.command.eq(res.result.respond.data[0].vipGymList[i]) )
-        }
-        console.log("gyms:")
-        console.log(gyms)
-        db.collection("gymList").where( {gymName:db.command.or(gyms)}).get({
-          success:function(res){
-            console.log(res)
-            that.setData({ gymListSellInfo: res.data })
-            console.log('----------------------')
-            console.log(that.data)
+      console.log(app.globalData)
+      wx.cloud.callFunction({
+        name: "cloudDb",
+        data: {
+          method: "select",
+          datasetName: "memberList",
+          phoneNumber: app.globalData.phoneNumber
+        },
+        success: res => {
+          console.log(res)
+          var tempRes = res
+          var gyms = []
+          
+          for (let i = 0; i < res.result.respond.data[0].vipGymList.length; i++) {
+            gyms.push(db.command.eq(res.result.respond.data[0].vipGymList[i]))
           }
-        })
-        
-        
-        // wx.cloud.callFunction({
-        //   name: "cloudDb",
-        //   data: {
-        //     method: "select",
-        //     datasetName: "gymList",
-        //     name: db.command.or(gyms)
-        //   },
-        //   success:function(res){
-        //     console.log(res)
-        //     that.setData({gymListInfo:res.result.respond.data})
-        //   }
-        // })
-      }
-    })
+          console.log("gyms:")
+          console.log(gyms)
+          db.collection("gymList").where({ gymName: db.command.or(gyms) }).get({
+            success: function (res) {
+              console.log(res)
+              that.setData({ gymListSellInfo: res.data })
+              console.log('----------------------')
+              console.log(that.data)
+            }
+          })
+
+
+          // wx.cloud.callFunction({
+          //   name: "cloudDb",
+          //   data: {
+          //     method: "select",
+          //     datasetName: "gymList",
+          //     name: db.command.or(gyms)
+          //   },
+          //   success:function(res){
+          //     console.log(res)
+          //     that.setData({gymListInfo:res.result.respond.data})
+          //   }
+          // })
+        }
+      })
+    }
+    
     
   },
 
@@ -211,7 +228,54 @@ Page({
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function (options) {
+    this.setData({ icon: app.globalData.hasOwnProperty('phoneNumber') })
+    if (this.data.icon) {
+      var that = this
+      this.setData({ inviteCode: options.inviteCode })
+
+      console.log(app.globalData)
+      wx.cloud.callFunction({
+        name: "cloudDb",
+        data: {
+          method: "select",
+          datasetName: "memberList",
+          phoneNumber: app.globalData.phoneNumber
+        },
+        success: res => {
+          console.log(res)
+          var tempRes = res
+          var gyms = []
+          for (let i = 0; i < res.result.respond.data[0].vipGymList.length; i++) {
+            gyms.push(db.command.eq(res.result.respond.data[0].vipGymList[i]))
+          }
+          console.log("gyms:")
+          console.log(gyms)
+          db.collection("gymList").where({ gymName: db.command.or(gyms) }).get({
+            success: function (res) {
+              console.log(res)
+              that.setData({ gymListSellInfo: res.data })
+              console.log('----------------------')
+              console.log(that.data)
+            }
+          })
+
+
+          // wx.cloud.callFunction({
+          //   name: "cloudDb",
+          //   data: {
+          //     method: "select",
+          //     datasetName: "gymList",
+          //     name: db.command.or(gyms)
+          //   },
+          //   success:function(res){
+          //     console.log(res)
+          //     that.setData({gymListInfo:res.result.respond.data})
+          //   }
+          // })
+        }
+      })
+    }
 
   },
 

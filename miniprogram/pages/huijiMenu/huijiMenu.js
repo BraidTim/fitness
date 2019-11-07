@@ -6,8 +6,20 @@ Page({
    * 页面的初始数据
    */
   data: {
-    AList: []
+    AList: [],
+    icon:false,
 
+  },
+  toLogin: function (event) {
+    wx.navigateTo({
+      url: '/pages/index/index',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+      },
+      success: function (res) {
+
+      }
+    })
   },
   scanQRcode: function() {
     wx.scanCode({
@@ -76,114 +88,118 @@ Page({
    */
   onLoad: function(options) {
     var that = this
-    wx.cloud.callFunction({
-      name: "cloudDb",
-      data: {
-        method: "select",
-        datasetName: "memberList",
-        huijiPhoneNumber: app.globalData.phoneNumber
-      },
-      success: function(res) {
-        console.log("-----res-----")
-        console.log(res)
-        console.log("---------------")
-        that.setData({
-          AList: res.result.respond.data
-        })
-        console.log("-----Alist-----")
-        console.log(that.data.AList)
-        console.log("---------------")
-        
-        var temp = []
-        for (var i = 0; i < res.result.respond.data.length; i++) {
-          temp.push([])
-        }
-        console.log("loop begin:")
-        console.log(res.result.respond.data.length)
-        console.log("---------------------------------")
-        var inviteCodes = []
-        for (var i = 0; i < res.result.respond.data.length; i++) {
-          inviteCodes.push(res.result.respond.data[i].phoneNumber)
-          //AList[i].BList=[]
-          var index = "AList[" + i + "].BList"
-          that.setData({ [index]: [] })
-        }
-          
-        console.log("-------inviteCodes-------:")
-        console.log(inviteCodes)
-        console.log("---------------------------------")
-        wx.cloud.callFunction({
-          name: "cloudDb",
-          data: {
-            method: "select",
-            datasetName: "buyInfo",
-            inviteCode: inviteCodes,
-            include: 1
-          },
-          success: function (ress) {
-            console.log("-------Bres-------:")
-            console.log(ress)
-            console.log("---------------------------------")
-            for (var j = 0; j < ress.result.respond.data.length ; j++){
-              console.log("------AList length------")
-              console.log(that.data.AList)
-              var why = that.data.AList.length
-              for (var k = 0; k < why; k++) {
-                console.log(k)
-                console.log("------compare------")
-                console.log(that.data.AList[k].phoneNumber)
-                console.log(ress.result.respond.data[j].inviteCode)
-                
-                if (that.data.AList[k].phoneNumber == ress.result.respond.data[j].inviteCode){
-                  console.log("------in AList length------")
-                  console.log(that.data.AList)
-                  var index = "AList[" + k + "].BList"
-                  var wtf = that.data.AList
-                  var wtff = wtf[k].BList
-                  console.log("------index wtf-----")
-                  console.log(index)
+    this.setData({ icon: app.globalData.hasOwnProperty('phoneNumber') })
+    if(this.data.icon==true){
+      wx.cloud.callFunction({
+        name: "cloudDb",
+        data: {
+          method: "select",
+          datasetName: "memberList",
+          huijiPhoneNumber: app.globalData.phoneNumber
+        },
+        success: function (res) {
+          console.log("-----res-----")
+          console.log(res)
+          console.log("---------------")
+          that.setData({
+            AList: res.result.respond.data
+          })
+          console.log("-----Alist-----")
+          console.log(that.data.AList)
+          console.log("---------------")
+
+          var temp = []
+          for (var i = 0; i < res.result.respond.data.length; i++) {
+            temp.push([])
+          }
+          console.log("loop begin:")
+          console.log(res.result.respond.data.length)
+          console.log("---------------------------------")
+          var inviteCodes = []
+          for (var i = 0; i < res.result.respond.data.length; i++) {
+            inviteCodes.push(res.result.respond.data[i].phoneNumber)
+            //AList[i].BList=[]
+            var index = "AList[" + i + "].BList"
+            that.setData({ [index]: [] })
+          }
+
+          console.log("-------inviteCodes-------:")
+          console.log(inviteCodes)
+          console.log("---------------------------------")
+          wx.cloud.callFunction({
+            name: "cloudDb",
+            data: {
+              method: "select",
+              datasetName: "buyInfo",
+              inviteCode: inviteCodes,
+              include: 1
+            },
+            success: function (ress) {
+              console.log("-------Bres-------:")
+              console.log(ress)
+              console.log("---------------------------------")
+              for (var j = 0; j < ress.result.respond.data.length; j++) {
+                console.log("------AList length------")
+                console.log(that.data.AList)
+                var why = that.data.AList.length
+                for (var k = 0; k < why; k++) {
                   console.log(k)
-                  console.log(wtf[k].BList)
-                  console.log(ress.result.respond.data[j])
-                  var tempList = wtff.push(ress.result.respond.data[j])
-                  console.log("---tp---")
-                  console.log(tempList)
-                  // console.log("------tempList------")
-                  // console.log(tempList)
-                  // console.log(index)
-                  // that.setData({ [index]: tempList})
+                  console.log("------compare------")
+                  console.log(that.data.AList[k].phoneNumber)
+                  console.log(ress.result.respond.data[j].inviteCode)
+
+                  if (that.data.AList[k].phoneNumber == ress.result.respond.data[j].inviteCode) {
+                    console.log("------in AList length------")
+                    console.log(that.data.AList)
+                    var index = "AList[" + k + "].BList"
+                    var wtf = that.data.AList
+                    var wtff = wtf[k].BList
+                    console.log("------index wtf-----")
+                    console.log(index)
+                    console.log(k)
+                    console.log(wtf[k].BList)
+                    console.log(ress.result.respond.data[j])
+                    var tempList = wtff.push(ress.result.respond.data[j])
+                    console.log("---tp---")
+                    console.log(tempList)
+                    // console.log("------tempList------")
+                    // console.log(tempList)
+                    // console.log(index)
+                    // that.setData({ [index]: tempList})
+                  }
                 }
               }
+              //temp[tempI] = ress.result.respond.data
+              // var tempA = that.data.AList[x]
+
+              // var index = "AList[" + x + "].BList"
+              // that.setData({
+              //   [index]: ress.result.respond.data
+              // })
+              console.log("------AList------")
+              console.log(that.data.AList)
             }
-            //temp[tempI] = ress.result.respond.data
-            // var tempA = that.data.AList[x]
+          })
+          // while(1){
+          //   var prepared = 1
+          //   for (var i = 0; i < res.result.respond.data.length; i++) {
+          //     if(temp[i].length == 0){
+          //       prepared = 0
+          //       break
+          //     }
+          //   }
+          //   if(prepared ==1){
+          //     break
+          //   }
+          // }
 
-            // var index = "AList[" + x + "].BList"
-            // that.setData({
-            //   [index]: ress.result.respond.data
-            // })
-            console.log("------AList------")
-            console.log(that.data.AList)
-          }
-        })
-        // while(1){
-        //   var prepared = 1
-        //   for (var i = 0; i < res.result.respond.data.length; i++) {
-        //     if(temp[i].length == 0){
-        //       prepared = 0
-        //       break
-        //     }
-        //   }
-        //   if(prepared ==1){
-        //     break
-        //   }
-        // }
+          // that.setData({ BList: temp })
 
-        // that.setData({ BList: temp })
-        
 
-      }
-    })
+        }
+      })
+
+    }
     
 
   },
@@ -199,6 +215,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
+    this.setData({ icon: app.globalData.hasOwnProperty('phoneNumber') })
 
   },
 

@@ -1,12 +1,19 @@
 <!--miniprogram/pages/huijiMenu/huijiMenu.wxml-->
-<view class="vmain">
-    <view class="flex-wrp" style="flex-direction:row;">
-  <view class="leftImage">
+<view class="flex-wrp" style="flex-direction:row;">
+  <view wx:if="{{icon==false}}" class="leftImage">
+  <image src="../../images/emptyIcon.jpg" style='width:150rpx;height:150rpx;'/>
+  </view>
+  <view wx:else class="leftImage">
     <open-data type="userAvatarUrl" style='width:150rpx;height:150rpx;'></open-data>
     <!--<image src="../../images/userimg.png" style='width:150rpx;height:150rpx;' />-->
   </view>
 
-  <view class="rightText">
+  <view wx:if="{{icon==false}}" class="rightText">
+    <view class="ti">
+      <text bindtap="toLogin">点击登录</text>
+    </view>
+  </view>
+  <view wx:else class="rightText">
     <view class="ti">
       <open-data type="userNickName"></open-data>
     </view>
@@ -15,6 +22,7 @@
     </view>
   </view>
 </view>
+
 
 <view class="balance" style="flex-direction:row;" bindtap="scanQRcode">
 
@@ -54,7 +62,7 @@
                 <view class="rightState">已分享</view>
             </view>
 </view>
-</view>
+
 <!--
 <view>my A</view>
 
