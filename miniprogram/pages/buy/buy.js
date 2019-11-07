@@ -8,11 +8,13 @@ Page({
    */
   data: {
     phoneNumber:"135XXXXXXXX",
-    items: [{ name: 'USA', value: '等待查询好友的分享信息' }],
+    //items: [{ name: 'USA', value: '等待查询好友的分享信息' }],
+    items: "请输入邀请码并点击查询分享信息",
     gym:[],
     inviteCode : "这儿是输入框",
     sharedMessage:"",
-    HJPhoneNumber:""
+    HJPhoneNumber:"",
+    phoneButton:false
   },
   getPhoneNumber(e) {
     console.log(e)
@@ -33,6 +35,7 @@ Page({
         console.log("final result")
         console.log(res.result.x.phoneNumber)
         that.setData({ phoneNumber: res.result.x.phoneNumber })
+        that.setData({phoneButton:true})
       },
       fail: err => {
         console.log('fail phone')
@@ -60,20 +63,25 @@ Page({
         phoneNumber: that.data.inviteCode.substring(0,11)
       },
       success:res=>{
-        var gym = res.result.respond.data[0].gym
-        var tempItem = []
-        // console.log(gym)
-        // console.log(tempItem)
-        for (var i = 0; i < gym.length; i++) {
-          tempItem.push({ name: gym[i], value: gym[i] })
+        if (res.result.respond.data.length==0){
+          that.setData({items:"未查到该邀请码的分享信息，请重试"})
+        }else{
+          var gym = res.result.respond.data[0].gym
+          var tempItem = []
+          // console.log(gym)
+          // console.log(tempItem)
+          for (var i = 0; i < gym.length; i++) {
+            tempItem.push({ name: gym[i], value: gym[i] })
+          }
+          console.log(tempItem)
+          that.setData({
+            items: tempItem
+          })
+          that.setData({
+            HJPhoneNumber: res.result.respond.data[0].HJPhoneNumber
+          })
         }
-        console.log(tempItem)
-        that.setData({
-          items: tempItem
-        })
-        that.setData({
-          HJPhoneNumber: res.result.respond.data[0].HJPhoneNumber
-        })
+        
       },
       fail:res=>{
         console.log(that.data.inviteCode.substring(0, 11))
@@ -139,6 +147,7 @@ Page({
       },
       success:res=>{
         var orderIdTemp = res.result.orderId
+        var prepay_id = res.result.prepay_id
         console.log("~!~!~!~!~!~!~!~!")
         console.log(orderIdTemp)
         console.log(res)
@@ -173,6 +182,16 @@ Page({
             console.log(res)
             wx.showToast({
               title: '购买成功',
+            })
+            wx.cloud.callFunction({
+              name:"message",
+              data:{
+                openid: app.globalData.openid,
+                prepay_id: prepay_id
+              },
+              success:res=>{
+                console.log("message sent")
+              }
             })
             wx.cloud.callFunction({
               name:"orderCheck",
@@ -210,8 +229,6 @@ Page({
     var that = this
 
     this.setData({inviteCode:options.inviteCode})
-    console.log("fromNavi")
-    console.log(options)
     wx.checkSession({
       success() {
         console.log("session remain")
@@ -228,8 +245,6 @@ Page({
                     code: ress.code
                   },
                   success: res => {
-                    //console.log(res)
-                    console.log(JSON.parse(res.result.temp).session_key)
                     app.globalData.sessionKey = JSON.parse(res.result.temp).session_key
                     app.globalData.openid = JSON.parse(res.result.temp).openid
                     wx.cloud.callFunction({
@@ -278,22 +293,15 @@ Page({
         // session_key 已经失效，需要重新执行登录流程
         wx.login({
           success(ress) {
-            var sessionKey = ''
             if (ress.code) {
-              console.log(ress)
-              //发起网络请求
               wx.cloud.callFunction({
                 name: 'decode',
                 data: {
                   code: ress.code
                 },
                 success: res => {
-                  //console.log(res)
-                  console.log(JSON.parse(res.result.temp).session_key)
                   app.globalData.sessionKey = JSON.parse(res.result.temp).session_key
                   app.globalData.openid = JSON.parse(res.result.temp).openid
-
-
                   wx.cloud.callFunction({
                     name:"cloudDb",
                     data:{
@@ -307,30 +315,6 @@ Page({
                       }
                     }
                   })
-                  // wx.navigateTo({
-                  //   url: '../buy/buy',
-                  // })
-                  //that.setData({ sessionKey: JSON.parse(res.result.temp).session_key})
-
-                  // wx.cloud.callFunction({
-                  //   name: 'phone',
-                  //   data: {
-                  //     sessionKey: sessionKey,
-                  //     encryptedData: phoneData.detail.encryptedData,
-                  //     iv: phoneData.detail.iv
-                  //   },
-                  //   success: res => {
-                  //     console.log("final result")
-                  //     console.log(res.result.x.phoneNumber)
-                  //     that.setData({ phoneNumber: res.result.x.phoneNumber })
-                  //   },
-                  //   fail: err => {
-                  //     console.log('fail phone')
-                  //     console.log(sessionKey)
-                  //     console.log(phoneData.detail.encryptedData)
-                  //     console.log(phoneData.detail.iv)
-                  //   }
-                  // })
                 },
                 fail: err => {
                   console.log('fail decode')

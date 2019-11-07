@@ -1,4 +1,89 @@
 <!--miniprogram/pages/gymList/gymList.wxml-->
-<view>Name: {{gymList}}</view>
-<view>Phone: {{phone}}</view>
-<view>Address: {{address}}</view>
+<view class="simg clearfix">
+  <image src="../../images/banner.png" />
+</view>
+<view class="menu" style="flex-direction:row;">
+  <view class="share" bindtap="clickShare">分享</view>
+  <view class="buy" bindtap="clickBuy">体验</view>
+</view>
+<view class="hint" style="flex-direction:row;">
+  <view class="p1"></view>
+  <view class="p2" style="background:{{shareColor}}"></view>
+  <view class="p3"></view>
+  <view class="p4" style="background:{{buyColor}}"></view>
+  <view class="p5"></view>
+</view>
+<form bindsubmit="search">
+
+  <view style="display:{{inviteModule}};">
+    <view class="inviteCodeModule" style="flex-direction:row;">
+      <view class="inviteInput">
+        <view class="icosch">
+          <image src="../../images/icosch.png" style="width:40rpx;height:40rpx;" />
+        </view>
+        <input class="text" name="inviteCode" placeholder="请输入邀请码" type="primary" value="{{inviteCode}}" />
+        <!--<input type="text" class="text" placeholder="请输入邀请码" />-->
+      </view>
+      <button class="inviteButton" form-type="submit" type="primary">搜索</button>
+    </view>
+  </view>
+</form>
+  <view wx:if="{{gymListSellInfo.length == 0}}" style="display:{{sellList}}"> 抱歉，您目前还不是健身房的会员！找不到可分享的健身房... </view>
+
+<view class="list" id="tapTest" data-hi="{{item.gymName}}" wx:for="{{gymListSellInfo}}" bindtap="clickGymSell" style="display:{{sellList}}">
+
+  <view class="gymItem" style="flex-direction:row;">
+    <view class="icon">
+      <image class="iconImage" src="{{item.gymIcon}}"></image>
+    </view>
+    <view class="info">
+      <view class="name">{{item.gymName}}</view>
+      <!--<view class="detail">GYM{{item.gymDetail}}</view>-->
+
+
+    </view>
+
+  </view>
+</view>
+
+<view class="list" id="tapTest" data-hi="{{item.gymName}}" wx:for="{{gymListBuyInfo}}" bindtap="clickGymBuy" style="display:{{buyList}}">
+  <view class="gymItem" style="flex-direction:row;">
+    <view class="icon">
+      <image class="iconImage" src="{{item.gymIcon}}"></image>
+    </view>
+    <view class="info">
+      <view class="name">{{item.gymName}}</view>
+      <!--<view class="detail">GYM{{item.gymDetail}}</view>-->
+      
+
+    </view>
+
+  </view>
+</view>
+
+
+
+<!--
+<wxs module="wxs" src="./gymList.wxs"></wxs>
+<view>you can share</view>
+<view class="list" id="tapTest" data-hi="{{item.name}}" wx:for="{{gymListSellInfo}}" bindtap="clickGymSell">{{item.name}}</view>
+<view>you can buy</view>
+
+<form bindsubmit="search">
+  <view class="page-section">
+    <view class="weui-cells__title">此处输入邀请码（暂时直接用分享者的手机号）</view>
+    <view class="weui-cells weui-cells_after-title">
+      <view class="weui-cell weui-cell_input">
+        <input class="weui-input" name="inviteCode" auto-focus placeholder="将会获取焦点" type="primary" value="{{inviteCode}}" />
+      </view>
+    </view>
+  </view>
+  <view class="btn-area">
+
+    <button form-type="submit" type="primary" class="button">点击查询</button>
+  </view>
+</form>
+
+<view class="list" id="tapTest" data-hi="{{item.name}}" wx:for="{{gymListBuyInfo}}" bindtap="clickGymBuy">{{item.name}}</view>
+
+-->

@@ -1,18 +1,101 @@
+var QRCode = require('./weAppQrcode.js');
+var qrcode;
 let app = getApp();
-var code =""
+var code = ""
 Page({
   data: {
     img: "/images/dh.gif",
-    inviteCode:"",
-    gym:[]
+    inviteCode: "",
+    gym: [],
+    boughtFriends: [],
+    encryptedCode: "正在生成邀请码...",
+  },
+  clipboard: function() {
+    wx.setClipboardData({
+      data: this.data.encryptedCode,
+      success(res) {
+        wx.getClipboardData({
+          success(res) {
+            console.log(res.data) // data
+          }
+        })
+      }
+    })
+  },
+  cancle: function() {
+    var that = this
+    wx.cloud.callFunction({
+      name: "cloudDb",
+      data: {
+        method: "delete",
+        datasetName: "shareInfo",
+        phoneNumber: app.globalData.phoneNumber,
+        gym: that.data.gym
+      },
+      success: function() {
+        wx.showToast({
+          title: 'cancled',
+
+        })
+        var begin = Date.now()
+        console.log(begin)
+        while (Date.now() - begin < 1000) {
+
+        }
+        wx.navigateBack({
+          delta: 1
+        })
+      }
+    })
   },
   onLoad(option) {
-    this.setData({inviteCode:option.inviteCode})
-    this.setData({ gym: option.gym })
+    var that = this
+    this.setData({
+      inviteCode: option.inviteCode
+    })
+    this.setData({
+      gym: option.gym
+    })
 
     console.log("naviData")
     console.log(option.inviteCode)
     code = option.inviteCode
+    wx.cloud.callFunction({
+      name: "phoneEncrypt",
+      data: {
+        phoneNumber: option.inviteCode,
+        method: 1
+      },
+      success: function(res) {
+        console.log(res)
+        that.setData({
+          encryptedCode: res.result.encryptedPhone
+        })
+        qrcode = new QRCode('canvas', {
+          text: JSON.stringify(res.result.encryptedPhone),
+          width: 120,
+          height: 120,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H,
+        });
+      }
+    })
+
+    wx.cloud.callFunction({
+      name: "cloudDb",
+      data: {
+        method: "select",
+        datasetName: "buyInfo",
+        inviteCode: app.globalData.phoneNumber,
+        gym: option.gym
+      },
+      success: function(res) {
+        that.setData({
+          boughtFriends: res.result.respond.data
+        })
+      }
+    })
   },
   showShareMenu() {
     wx.showShareMenu();
@@ -24,12 +107,11 @@ Page({
   },
   onShareAppMessage: (res) => {
     //var that = this
-    var tempPath = '/pages/buy/buy?inviteCode=' + code
+    var tempPath = '/pages/gymList/gymList?inviteCode=' + encryptedCode
     if (res.from === 'button') {
       console.log("来自页面内转发按钮");
       console.log(res.target);
-    }
-    else {
+    } else {
       console.log("来自右上角转发菜单")
     }
     return {

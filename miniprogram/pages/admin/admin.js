@@ -56,7 +56,14 @@ Page({
             newValue: { openid: app.globalData.openid }
           },
           success:res=>{
-            that.onLoad()
+            console.log(res)
+            if(res.result.respond.stats.updated==0){
+              that.setData({ title: "抱歉，没查询到您的会籍信息，请向管理员咨询具体情况!" })
+
+            }else{
+              that.onLoad()
+
+            }
           }
         })
       },

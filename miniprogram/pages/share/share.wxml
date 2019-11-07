@@ -8,24 +8,20 @@
     <view>{{phoneH3}}XXXX{{phoneT4}}</view>
 
     <view>选择您要分享的健身房</view>
-
-    <form bindsubmit="formSubmit" >
-    <checkbox-group bindchange="checkboxChange" name="checkBox">
-      <label class="checkbox" wx:for="{{items}}">
-        <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
-      </label>
-    </checkbox-group>
-    <!-- <view class="section section_gap">
-        <view class="section__title">备选参数</view>
-        <radio-group name="radio-group">
-          <label><radio value="radio1"/>para1</label>
-          <label><radio value="radio2"/>para2</label>
-        </radio-group>
-      </view> -->
-    <view class="btn-area">
-        <button class="bt1" form-type="submit" type="primary" disabled="{{shareDisable}}">确认分享</button>
-      </view>
-    </form>
+    <view wx:if="{{items[0].length==1}}">很抱歉，该手机号未查到会员记录，请确认您会员的健身房有参加本活动。如有疑问，请联系您的会籍</view>
+    <view wx:else>
+      <form bindsubmit="formSubmit" >
+      <checkbox-group bindchange="checkboxChange" name="checkBox">
+        <label class="checkbox" wx:for="{{items}}">
+          <checkbox value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+        </label>
+      </checkbox-group>
+      <view class="btn-area">
+          <button class="bt1" form-type="submit" type="primary" disabled="{{shareDisable}}">确认分享</button>
+        </view>
+      </form>
+    </view>
+    
     <button class="bt1" bindtap="showRecord" type="primary">查看分享记录</button>
   </view>
 </view>

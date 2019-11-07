@@ -1,1 +1,144 @@
 /* miniprogram/pages/gymList/gymList.wxss */
+
+.list {
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+  border-bottom: silver solid;
+}
+
+.menu {
+  display: flex;
+  height: 80rpx;
+}
+
+.share {
+  width: 50%;
+  height: 80rpx;
+  text-align: center;
+  border-right: solid silver;
+  font-size: 120%;
+}
+
+.buy {
+  width: 50%;
+  height: 80rpx;
+  text-align: center;
+  font-size: 120%;
+}
+
+.hint {
+  display: flex;
+  border-bottom: solid silver;
+}
+
+.p1 {
+  width: 20%;
+  height: 10rpx;
+}
+
+.p2 {
+  width: 10%;
+  height: 10rpx;
+}
+
+.p3 {
+  width: 40%;
+  height: 10rpx;
+}
+
+.p4 {
+  width: 10%;
+  height: 10rpx;
+  background: orange;
+}
+
+.p5 {
+  width: 20%;
+  height: 10rpx;
+}
+
+.gymItem {
+  display: flex;
+  width: 100%;
+  height: 200rpx;
+  border-bottom: solid silver;
+}
+
+.icon {
+  width: 25%;
+}
+
+.info {
+  width: 75%;
+}
+
+.name {
+  height: 100%;
+  text-align: center;
+  font-size: 180%;
+  font-weight: bolder;
+  margin-top: 5%;
+}
+
+.detail {
+  height: 70%;
+  font: bolder;
+}
+
+.iconImage {
+  width: 180rpx;
+  height: 180rpx;
+  margin-top: 10rpx;
+}
+
+.inviteCodeModule {
+  display: flex;
+  width: 100%;
+  height: 120rpx;
+  border-bottom: solid silver;
+}
+
+.inviteInput {
+  
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  width: 60%;
+  border: 1px solid #eee;
+  background: #f5f5f5;
+  padding: 5px 15px 5px 35px;
+  position: relative;
+  -moz-border-radius: 100px;
+  -webkit-border-radius: 100px;
+  border-radius: 100px;
+}
+
+.icosch {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  margin-top: -8px;
+}
+
+.text {
+  width: 100%;
+  height: 22px;
+  line-height: 22px;
+  font-size: 18px;
+  color: #333;
+  background: none;
+  border: 0;
+}
+
+.inviteButton {
+  
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  width: 30%;
+  background: greenyellow;
+  font-size: 40rpx;
+  display: block;
+  text-align: center;
+  -moz-border-radius: 100px;
+  -webkit-border-radius: 100px;
+  border-radius: 100px;
+}

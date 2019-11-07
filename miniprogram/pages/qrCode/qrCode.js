@@ -1,13 +1,28 @@
 var QRCode = require('./weAppQrcode.js');
 var qrcode;
-
+const app = getApp()
 Page({
   data:{
     inviteCode:"",
     phoneNumber:"",
     gym:"",
-    date:"9102-07-04",
-    message:"正在搜索分享记录"
+    buyDate:"",
+    message:"正在搜索分享记录",
+    payState:"waiting",
+    useState:"waiting",
+    gymAddress:"",
+    gymPhone:""
+  },
+  backHome: function (option) {
+    wx.navigateTo({
+      url: '/pages/loggedIndex/loggedIndex',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+      },
+      success: function (res) {
+
+      }
+    })
   },
   onLoad: function (option) {
     console.log(option)
@@ -18,9 +33,8 @@ Page({
       data: {
         method: "select",
         datasetName: "buyInfo",
-        phoneNumber: that.data.phoneNumber.substring(0,11),
-        payState:"1",
-        useState:"0"
+        phoneNumber: app.globalData.phoneNumber,
+        gym:option.gym
       },
       success: res => {
         console.log(res)
@@ -36,6 +50,12 @@ Page({
           this.setData({ inviteCode: res.result.respond.data[0].inviteCode })
           this.setData({ phoneNumber: res.result.respond.data[0].phoneNumber })
           this.setData({ gym: res.result.respond.data[0].gym })
+          this.setData({ payState: res.result.respond.data[0].payState })
+
+          this.setData({ useState: res.result.respond.data[0].useState })
+          this.setData({ buyDate: res.result.respond.data[0].buyDate })
+
+
           const eventChannel = this.getOpenerEventChannel()
           // eventChannel.emit('acceptDataFromOpenedPage', { data: 'test' });
           // eventChannel.on('acceptDataFromOpenerPage', function (data) {
@@ -49,7 +69,18 @@ Page({
             colorLight: "#ffffff",
             correctLevel: QRCode.CorrectLevel.H,
           });
-
+          wx.cloud.callFunction({
+            name: "cloudDb",
+            data: {
+              method: "select",
+              datasetName: "gymList",
+              gymName: that.data.gym
+            },
+            success: res => {
+              that.setData({ gymAddress: res.result.respond.data[0].gymAddress })
+              that.setData({ gymPhone: res.result.respond.data[0].gymPhone })
+            }
+          })
           //qrcode.makeCode(JSON.stringify(res.result.respond.data[0]));  //用元素对应的code更新二维码
         }
       }

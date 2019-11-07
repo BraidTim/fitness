@@ -1,7 +1,42 @@
+<view class="bg" style="background-image: url('https://6d65-meeu-0624-1259514512.tcb.qcloud.la/fxbg.png?sign=92d8965ff6d94bd082e346ae159ddddb&t=1571142503'); background-size: 100% 100%;">
+  <view style="height:400rpx" />
+  <view class="qrcodeModule">
+    <view style="height:10rpx" />
+
+    <view class="qrcode">
+      <!--<image src="../../images/fxerm.png" style="width:250rpx;height:250rpx;margin-top:10%;" />-->
+      <view style="width:250rpx;height:250rpx;margin-top:20rpx;margin-left:170rpx;">
+      <canvas class='canvas' canvas-id='canvas' ></canvas>
+      </view>
+    </view>
+    
+    <view class="codeText" style="flex-direction:row;">
+      <view class="fxbtn">
+        <input class="text" type="text" value="{{encryptedCode}}" />
+        <view bindtap="clipboard" class="fxb">复制</view>
+      </view>
+    </view>
+
+
+  </view>
+    <button  class="shareButton" type="primary" open-type="share" data-name="pageShare" id="share">点击发送给好友</button>
+
+</view>
+
+<!--
 <view class="view">
   <view>{{inviteCode}}</view>
   <view>{{gym}}</view>
-
+  <view>
+    <view>已购买的朋友们：</view>
+    <view wx:for="{{boughtFriends}}">{{item.phoneNumber}}</view>
+  </view>
   <image class="cover-9" src="{{img}}" bindtap="img"></image>
   <button type="primary" open-type="share" data-name="pageShare" id="share">点击发送给好友</button>
+  <button type="primary" bindtap="cancle">取消分享</button>
 </view>
+<view>
+  <view>已购买的朋友们：</view>
+  <view wx:for="{{boughtFriends}}">{{item.phoneNumber}}--useState:{{item.useState}}</view>
+</view>
+-->

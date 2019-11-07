@@ -1,11 +1,13 @@
 <!--miniprogram/index/index.wxml-->
 
+<view style="height:200rpx"/>
 
-<view >邀请您的朋友来一起健身吧！</view>
-<image src="../../images/poster.jpg" mode="widthFix" class="poster">图片说明 </image>
-<view class="buttonView">
-<button bindtap="share" loading="{{loadingShare}}" type="primary" class="button" >我要发起分享</button>
-<button bindtap="buy" loading="{{loadingBuy}}" type="primary" class="button">我要接受分享</button>
-</view>
-<button bindtap="admin">管理员</button>
-<view>{{sessionKey}}</view>
+<view style="font-size:150%;  text-align: center;">邀请您的朋友来健身吧！</view>
+<view style="height:100rpx"/>
+
+<view   style="text-align: center;">{{checking}}</view>
+<view style="height:350rpx"/>
+<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="primary" class="button" disabled="{{checkAuth}}">请点此处授权</button>
+<view style="height:50rpx"/>
+
+<navigator open-type="exit" target="miniProgram"  style="text-align: center;">退出小程序</navigator>

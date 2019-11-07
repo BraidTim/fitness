@@ -1,25 +1,24 @@
 <!--miniprogram/pages/buy/buy.wxml-->
 <view>接受分享</view>
 <view>一些说明 blablabla</view>
-<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber">请点此处授权</button>
+<button open-type="getPhoneNumber" bindgetphonenumber="getPhoneNumber" type="primary" class="button" disabled="{{phoneButton}}">请点此处授权</button>
 <view>{{phoneNumber}}</view>
 <form bindsubmit="search">
 <view class="page-section">
     <view class="weui-cells__title">此处输入邀请码（暂时直接用分享者的手机号）</view>
     <view class="weui-cells weui-cells_after-title">
       <view class="weui-cell weui-cell_input">
-        <input class="weui-input" name = "inviteCode" auto-focus placeholder="将会获取焦点" value="{{inviteCode}}"/>
+        <input class="weui-input" name = "inviteCode" auto-focus placeholder="将会获取焦点" type="primary" value="{{inviteCode}}"/>
       </view>
     </view>
   </view>
 <view class="btn-area">
 
-    <button form-type="submit">点击查询</button>
+    <button form-type="submit" type="primary" class="button">点击查询</button>
   </view>
 </form>
 
-<view>{{Next}}</view>
-
+<view  wx:if="{{items[0].length != 1}}" >
 <form bindsubmit="buy" >
 <checkbox-group  name="checkBox">
   <label class="checkbox" wx:for="{{items}}">
@@ -27,9 +26,15 @@
   </label>
 </checkbox-group>
 <view class="btn-area">
-    <button form-type="submit" type="primary">接受分享</button>
+    <button form-type="submit" type="primary" class="button">接受分享</button>
   </view>
 </form>
-<button form-type="submit" bindtap="query">查询分享历史</button>
+</view>
+<view wx:else="{{items[0].length == 1}}"> 
+{{items}}
+</view>
+
+
+<button form-type="submit" bindtap="query" class="button">查询分享历史>></button>
 <view>{{sharedMessage}}</view>
 

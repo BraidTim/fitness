@@ -4,30 +4,38 @@ const app = getApp()
 
 Page({
   data: {
-    loadingShare:false,
-    loadingBuy:false,
-    checkAuth : true,
-    checking:"查询会员中..."
+    loadingShare: false,
+    loadingBuy: false,
+    checkAuth: true,
+    checking: "查询会员中..."
 
   },
-  admin: function () {
+  admin: function() {
     wx.navigateTo({
       url: '../admin/admin',
     })
   },
-  share: function () {
-    this.setData({loadingShare:true})
+  share: function() {
+    this.setData({
+      loadingShare: true
+    })
     wx.navigateTo({
       url: '../share/share',
     })
-    this.setData({ loadingShare: false })    
+    this.setData({
+      loadingShare: false
+    })
   },
-  buy: function () {
-    this.setData({ loadingBuy: true })
+  buy: function() {
+    this.setData({
+      loadingBuy: true
+    })
     wx.navigateTo({
       url: '../buy/buy',
     })
-    this.setData({ loadingBuy: false })
+    this.setData({
+      loadingBuy: false
+    })
   },
   getPhoneNumber(e) {
     console.log(e)
@@ -55,7 +63,7 @@ Page({
             method: "select",
             phoneNumber: app.globalData.phoneNumber
           },
-          success: function (res) {
+          success: function(res) {
             console.log(res)
             if (res.result.respond.data.length != 0) {
               app.globalData.huijiPhoneNumber = res.result.respond.data[0].huijiPhoneNumber
@@ -67,18 +75,18 @@ Page({
                   datasetName: "memberList",
                   method: "update",
                   phoneNumber: app.globalData.phoneNumber,
-                  newValue:{
+                  newValue: {
                     openid: app.globalData.openid
                   }
                 },
-                success:function(res){
+                success: function(res) {
                   wx.navigateTo({
                     url: '/pages/loggedIndex/loggedIndex',
                   })
                 }
               })
-              
-            }else{
+
+            } else {
               wx.cloud.callFunction({
                 name: "cloudDb",
                 data: {
@@ -86,11 +94,11 @@ Page({
                   method: "insert",
                   phoneNumber: app.globalData.phoneNumber,
                   openid: app.globalData.openid,
-                  name:"",
-                  character:3
-                  
+                  name: "",
+                  character: 3
+
                 },
-                success: function (res) {
+                success: function(res) {
                   wx.navigateTo({
                     url: '/pages/loggedIndex/loggedIndex',
                   })
@@ -99,8 +107,12 @@ Page({
             }
           }
         })
-        that.setData({ phoneNumber: res.result.x.phoneNumber })
-        that.setData({ phoneButton: true })
+        that.setData({
+          phoneNumber: res.result.x.phoneNumber
+        })
+        that.setData({
+          phoneButton: true
+        })
       },
       fail: err => {
         console.log('fail phone')
@@ -113,9 +125,11 @@ Page({
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {    
+  onLoad: function(options) {
     var that = this
-    that.setData({checkAuth:true})
+    that.setData({
+      checkAuth: true
+    })
     wx.login({
       success(ress) {
         console.log("logined")
@@ -131,24 +145,28 @@ Page({
               app.globalData.openid = JSON.parse(res.result.temp).openid
               app.globalData.sessionKey = JSON.parse(res.result.temp).session_key
               wx.cloud.callFunction({
-                name:"cloudDb",
-                data:{
-                  datasetName:"memberList",
-                  method:"select",
+                name: "cloudDb",
+                data: {
+                  datasetName: "memberList",
+                  method: "select",
                   openid: app.globalData.openid
                 },
-                success:function(res){
+                success: function(res) {
                   console.log(res)
-                  if(res.result.respond.data.length!=0){
+                  if (res.result.respond.data.length != 0) {
                     app.globalData.phoneNumber = res.result.respond.data[0].phoneNumber
                     app.globalData.huijiPhoneNumber = res.result.respond.data[0].huijiPhoneNumber
                     app.globalData.myInfo = res.result.respond.data[0]
                     wx.navigateTo({
                       url: '/pages/loggedIndex/loggedIndex',
                     })
-                  } else{
-                    that.setData({checkAuth:false})
-                    that.setData({ checking: "没找到记录，如果是初次试用请授权！" })
+                  } else {
+                    that.setData({
+                      checkAuth: false
+                    })
+                    that.setData({
+                      checking: "没找到记录，如果是初次试用请授权！"
+                    })
 
                     console.log(that.data)
                   }
@@ -169,49 +187,49 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   }
 })

@@ -48,7 +48,7 @@ Page({
       success:res=>{
         if(res.result.respond.data.length!=0){
           wx.showToast({
-            title: '您已有分享记录，新纪录已覆盖就记录',
+            title: '您已有分享记录，新纪录已覆盖旧记录',
             icon:"none"
           })
           wx.cloud.callFunction({
@@ -81,7 +81,6 @@ Page({
                 // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
               },
               success: function (res) {
-                // 通过eventChannel向被打开页面传送数据
 
               }
             })
@@ -162,9 +161,7 @@ Page({
           success:res=>{
             console.log(res)
             if (res.result.respond.data.length==0){
-              that.setData({
-                items: "没有找到记录，请确认您用该手机号在参与活动的健身房中有会员。如果确认过还是没有记录，请联系您的会籍或教练"
-              })
+              
             }else{
               var gym = res.result.respond.data[0].gym
               var tempItem = []
@@ -215,10 +212,6 @@ Page({
           that.setData({ phoneT4: res.result.respond.data[0].phoneNumber.substring(7, 11) })
 
           const db = wx.cloud.database()
-          console.log("???")
-          // 查询当前用户所有的 counters
-          console.log("query:")
-          console.log(that.data.phoneNumber)
           wx.cloud.callFunction({
             name: 'cloudDb',
             data: {
