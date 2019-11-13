@@ -23,6 +23,7 @@ Page({
     buyList: "block",
     icon:false,
     inviteCode:"",
+    decodePhone:"",
   },
   clickShare: function (event) {
     this.setData({ buyColor: "white" })
@@ -85,7 +86,7 @@ Page({
       }
     }
     wx.navigateTo({
-      url: '/pages/gymDetail/gymDetail?gymInfo=' + JSON.stringify(tempGymInfo).replace(/\&/g, "%26").replace(/\?/g, "%3F").replace(/\=/g, "%3D") + "&type=Buy",
+      url: '/pages/gymDetail/gymDetail?gymInfo=' + JSON.stringify(tempGymInfo).replace(/\&/g, "%26").replace(/\?/g, "%3F").replace(/\=/g, "%3D") + "&type=Buy&inviteCode=" + that.data.decodePhone,
     })
   },
   search: function (e) {
@@ -106,6 +107,7 @@ Page({
       success: function (res) {
         console.log(res)
         var decryptedCode = res.result.decryptedPhone
+        that.setData({ decodePhone: decryptedCode})
         wx.cloud.callFunction({
           name: "cloudDb",
           data: {
@@ -166,10 +168,11 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({ inviteCode: options.inviteCode })
+
     this.setData({ icon: app.globalData.hasOwnProperty('phoneNumber') })
     if(this.data.icon){
       var that = this
-      this.setData({ inviteCode: options.inviteCode })
 
       console.log(app.globalData)
       wx.cloud.callFunction({

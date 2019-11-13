@@ -1,7 +1,6 @@
 {
   "pages": [
-        "pages/loggedIndex/loggedIndex",
-        
+    "pages/loggedIndex/loggedIndex",
     "pages/index/index",
     "pages/share/share",
     "pages/buy/buy",
@@ -15,7 +14,10 @@
     "pages/myInfo/myInfo",
     "pages/gymDetail/gymDetail",
     "pages/huijiMenu/huijiMenu",
-    "pages/map/map"
+    "pages/map/map",
+    "pages/huijiBList/huijiBList",
+    "pages/guildDungeon/guildDungeon",
+    "pages/dungeonList/dungeonList"
   ],
   "window": {
     "backgroundColor": "#0000FF",

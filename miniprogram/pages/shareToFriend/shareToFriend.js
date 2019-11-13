@@ -105,12 +105,14 @@ Page({
     wx.hideShareMenu();
     console.log("隐藏了当前页面的转发按钮");
   },
-  onShareAppMessage: (res) => {
+  onShareAppMessage: function(event) {
     //var that = this
-    var tempPath = '/pages/gymList/gymList?inviteCode=' + encryptedCode
-    if (res.from === 'button') {
+    console.log("---share---")
+    console.log(this)
+    var tempPath = '/pages/gymList/gymList?inviteCode=' + this.data.encryptedCode
+    if (event.from === 'button') {
       console.log("来自页面内转发按钮");
-      console.log(res.target);
+      console.log(event.target);
     } else {
       console.log("来自右上角转发菜单")
     }

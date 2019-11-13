@@ -9,6 +9,7 @@ Page({
     gymInfo:{},
     type:"",
     icon:false,
+    decodePhone:"",
   },
   toCall:function(){
     wx.makePhoneCall({
@@ -108,7 +109,7 @@ Page({
               gymAddress: that.data.gymInfo.gymAddress,
               gymPhone: that.data.gymInfo.gymPhone,
               gymLocation: that.data.gymInfo.gymLocation,
-              inviteCode: app.globalData.inviteCode,
+              inviteCode: that.data.decodePhone,
               orderId: res.result.orderId,
               prepay_id: res.result.prepay_id,
               payState: "0",
@@ -178,6 +179,9 @@ Page({
    */
   onLoad: function (options) {
     this.setData({ icon: app.globalData.hasOwnProperty('phoneNumber') })
+    console.log("```````````options___________")
+    console.log(options)
+    this.setData({ decodePhone: options.inviteCode })
 
     console.log("gymDetail")
     console.log(options.gymInfo.replace("%26", "&").replace("%3F", "?").replace("%3D", "="))
@@ -188,9 +192,13 @@ Page({
     this.setData({ type: options.type})
     var that = this
     var picList = []
-    picList.push("https://6d65-meeu-0624-1259514512.tcb.qcloud.la/haoran1.jpg?sign=34b0b4ab7b82fe04ee3611dda5b7c735&t=1572490181")
-    picList.push("https://6d65-meeu-0624-1259514512.tcb.qcloud.la/haoran2.jpg?sign=7f7942dfe7c075c29f1e41ce20b2fdd5&t=1572490198")
-    picList.push("https://6d65-meeu-0624-1259514512.tcb.qcloud.la/haoran3.jpg?sign=211beadf40549d5e82c6f82ec4b7a985&t=1572490217")
+    console.log("-----photo------")
+    console.log(that.data.gymInfo.gymPhoto)
+    // picList.push("https://6d65-meeu-0624-1259514512.tcb.qcloud.la/haoran1.jpg?sign=34b0b4ab7b82fe04ee3611dda5b7c735&t=1572490181")
+    // picList.push("https://6d65-meeu-0624-1259514512.tcb.qcloud.la/haoran4.jpg?sign=1d656e1a5b4965b34ebcb917197cc00c&t=1573627212")
+    // picList.push("https://6d65-meeu-0624-1259514512.tcb.qcloud.la/haoran3.jpg?sign=211beadf40549d5e82c6f82ec4b7a985&t=1572490217")
+    // picList.push("https://6d65-meeu-0624-1259514512.tcb.qcloud.la/haoran5.jpg?sign=1f35dd495b9053c810e49220b8d385db&t=1573627242")
+    picList = that.data.gymInfo.gymPhoto
     that.setData({
       picList: picList,
     })

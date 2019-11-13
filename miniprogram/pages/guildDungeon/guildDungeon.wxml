@@ -1,0 +1,49 @@
+<button bindtap="showList">查看当前公会需求</button>
+<form bindsubmit="formSubmit" bindreset="formReset">
+
+
+  <view class="section">
+    <view class="section__title">角色名</view>
+    <input name="name" placeholder="please input here" />
+  </view>
+  <view class="section">
+    <view class="section__title">上线时间</view>
+    <input name="time" placeholder="please input here" />
+  </view>
+  <view class="section section_gap">
+    <view class="section__title">职业</view>
+    <radio-group name="class">
+      <label><radio value="SS"/>SS</label>
+      <label><radio value="FS"/>FS</label>
+      <label><radio value="MS"/>MS</label>
+      <label><radio value="XD"/>XD</label>
+      <label><radio value="DZ"/>DZ</label>
+      <label><radio value="LR"/>LR</label>
+      <label><radio value="ZS"/>ZS</label>
+      <label><radio value="QS"/>QS</label>
+    </radio-group>
+  </view>
+  <view class="section section_gap">
+    <view class="section__title">副本需求</view>
+    <checkbox-group name="dungeon">
+      <label><checkbox value="深渊"/>深渊</label>
+      <label><checkbox value="黑下"/>黑下</label>
+      <label><checkbox value="STSM"/>STSM</label>
+      <label><checkbox value="TL"/>TL</label>
+      <label><checkbox value="厄运北"/>厄运北</label>
+      <label><checkbox value="厄运西"/>厄运西</label>
+      <label><checkbox value="厄运东"/>厄运东</label>
+      <label><checkbox value="黑上"/>黑上</label>
+            <label><checkbox value="MC"/>MC</label>
+
+      <label><checkbox value="黑龙"/>黑龙</label>
+            <label><checkbox value="打杂"/>打杂</label>
+
+
+    </checkbox-group>
+  </view>
+  <view class="btn-area">
+    <button formType="submit">Submit</button>
+    <button formType="reset">Reset</button>
+  </view>
+</form>

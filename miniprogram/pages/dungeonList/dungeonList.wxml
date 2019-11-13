@@ -1,0 +1,203 @@
+<!--miniprogram/pages/dungeonList/dungeonList.wxml-->
+<view>深渊</view>
+<view class="cur" wx:for="{{list}}" data-hi="{{item.gym}}" >
+
+    <wxs module="m1">
+var getMax = function(array) {
+console.log("-----------------aaaaaa-------------------");
+console.log(array);
+  if(array.indexOf("深渊") != -1 ){
+  return 1;
+  }else{
+  return 0;
+  }
+}
+
+module.exports.getMax = getMax;
+</wxs>
+    
+    <view class="rightState" wx:if="{{m1.getMax(item.dungeon)}}" style="color:green;">{{item.name}}--{{item.class}}--{{item.time}}</view>
+
+  </view>
+  
+  <view>TL</view>
+<view class="cur" wx:for="{{list}}" data-hi="{{item.gym}}" >
+
+    <wxs module="m2">
+var getMax = function(array) {
+  if(array.indexOf("TL") != -1 ){
+  return true
+  }else{
+  return false
+  }
+}
+
+module.exports.getMax = getMax;
+</wxs>
+    
+    <view class="rightState" wx:if="{{m2.getMax(item.dungeon)}}" style="color:green;">{{item.name}}--{{item.class}}--{{item.time}}</view>
+
+  </view>
+  <view>STSM</view>
+<view class="cur" wx:for="{{list}}" data-hi="{{item.gym}}" >
+
+    <wxs module="m3">
+var getMax = function(array) {
+  if(array.indexOf("STSM") != -1 ){
+  return true
+  }else{
+  return false
+  }
+}
+
+module.exports.getMax = getMax;
+</wxs>
+    
+    <view class="rightState" wx:if="{{m3.getMax(item.dungeon)}}" style="color:green;">{{item.name}}--{{item.class}}--{{item.time}}</view>
+
+  </view>
+  <view>黑下</view>
+<view class="cur" wx:for="{{list}}" data-hi="{{item.gym}}" >
+
+    <wxs module="m4">
+var getMax = function(array) {
+  if(array.indexOf("黑下") != -1 ){
+  return true
+  }else{
+  return false
+  }
+}
+
+module.exports.getMax = getMax;
+</wxs>
+    
+    <view class="rightState" wx:if="{{m4.getMax(item.dungeon)}}" style="color:green;">{{item.name}}--{{item.class}}--{{item.time}}</view>
+
+  </view>
+  <view>厄运东</view>
+<view class="cur" wx:for="{{list}}" data-hi="{{item.gym}}" >
+
+    <wxs module="m5">
+var getMax = function(array) {
+  if(array.indexOf("厄运东") != -1 ){
+  return true
+  }else{
+  return false
+  }
+}
+
+module.exports.getMax = getMax;
+</wxs>
+    
+    <view class="rightState" wx:if="{{m5.getMax(item.dungeon)}}" style="color:green;">{{item.name}}--{{item.class}}--{{item.time}}</view>
+
+  </view>
+  <view>厄运西</view>
+<view class="cur" wx:for="{{list}}" data-hi="{{item.gym}}" >
+
+    <wxs module="m6">
+var getMax = function(array) {
+  if(array.indexOf("厄运西") != -1 ){
+  return true
+  }else{
+  return false
+  }
+}
+
+module.exports.getMax = getMax;
+</wxs>
+    
+    <view class="rightState" wx:if="{{m6.getMax(item.dungeon)}}" style="color:green;">{{item.name}}--{{item.class}}--{{item.time}}</view>
+
+  </view>
+  <view>厄运北</view>
+<view class="cur" wx:for="{{list}}" data-hi="{{item.gym}}" >
+
+    <wxs module="m7">
+var getMax = function(array) {
+  if(array.indexOf("厄运北") != -1 ){
+  return true
+  }else{
+  return false
+  }
+}
+
+module.exports.getMax = getMax;
+</wxs>
+    
+    <view class="rightState" wx:if="{{m7.getMax(item.dungeon)}}" style="color:green;">{{item.name}}--{{item.class}}--{{item.time}}</view>
+
+  </view>
+  <view>黑上</view>
+<view class="cur" wx:for="{{list}}" data-hi="{{item.gym}}" >
+
+    <wxs module="m8">
+var getMax = function(array) {
+  if(array.indexOf("黑上") != -1 ){
+  return true
+  }else{
+  return false
+  }
+}
+
+module.exports.getMax = getMax;
+</wxs>
+    
+    <view class="rightState" wx:if="{{m8.getMax(item.dungeon)}}" style="color:green;">{{item.name}}--{{item.class}}--{{item.time}}</view>
+
+  </view>
+  <view>MC</view>
+<view class="cur" wx:for="{{list}}" data-hi="{{item.gym}}" >
+
+    <wxs module="m9">
+var getMax = function(array) {
+  if(array.indexOf("MC") != -1 ){
+  return true
+  }else{
+  return false
+  }
+}
+
+module.exports.getMax = getMax;
+</wxs>
+    
+    <view class="rightState" wx:if="{{m9.getMax(item.dungeon)}}" style="color:green;">{{item.name}}--{{item.class}}--{{item.time}}</view>
+
+  </view>
+  <view>黑龙</view>
+<view class="cur" wx:for="{{list}}" data-hi="{{item.gym}}" >
+
+    <wxs module="m0">
+var getMax = function(array) {
+  if(array.indexOf("黑龙") != -1 ){
+  return true
+  }else{
+  return false
+  }
+}
+
+module.exports.getMax = getMax;
+</wxs>
+    
+    <view class="rightState" wx:if="{{m0.getMax(item.dungeon)}}" style="color:green;">{{item.name}}--{{item.class}}--{{item.time}}</view>
+
+  </view>
+  <view>打杂</view>
+<view class="cur" wx:for="{{list}}" data-hi="{{item.gym}}" >
+
+    <wxs module="m11">
+var getMax = function(array) {
+  if(array.indexOf("打杂") != -1 ){
+  return true
+  }else{
+  return false
+  }
+}
+
+module.exports.getMax = getMax;
+</wxs>
+    
+    <view class="rightState" wx:if="{{m11.getMax(item.dungeon)}}" style="color:green;">{{item.name}}--{{item.class}}--{{item.time}}</view>
+
+  </view>
+  

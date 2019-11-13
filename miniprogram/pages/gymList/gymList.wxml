@@ -1,6 +1,6 @@
 <!--miniprogram/pages/gymList/gymList.wxml-->
 <view class="simg clearfix">
-  <image src="../../images/banner.png" />
+  <image style="width:100%" src="../../images/banner.png" />
 </view>
 <view class="menu" style="flex-direction:row;">
   <view class="share" bindtap="clickShare">分享</view>

@@ -45,22 +45,18 @@
   </view>
 </view>
 <view class="buyHisList" style="display:{{dis}}">
-          <view class="cur">
-                <view class="leftIcon"><image src="../../images/lo1.png" style='width:50rpx;height:50rpx;'/></view>
-                <view class="middleText2"><view class="gray9">name1</view></view>
-                <view class="rightState">已分享</view>
-   
-            </view>
-            <view class="cur">
-                <view class="leftIcon"><image src="../../images/lo2.png" style='width:50rpx;height:50rpx;'/></view>
-                <view class="middleText2"><view class="gray9">name2</view></view>
-                <view class="rightState">未分享</view>
-            </view>
-            <view class="cur">
-                <view class="leftIcon"><image src="../../images/lo3.png" style='width:50rpx;height:50rpx;'/></view>
-                <view class="middleText2"><view class="gray9">name3</view></view>
-                <view class="rightState">已分享</view>
-            </view>
+<view class="cur" wx:for="{{AList}}" data-hi="{{index}}" bindtap="toB">
+
+    
+    <view class="middleText2">
+      <view class="gray9">{{item.name}}</view>
+    </view>
+    <view class="rightState" wx:if="{{item.shared == -1}}" style="color:green;">未分享</view>
+    <view class="rightState" wx:elif="{{item.shared == 0}}" style="color:blue;">分享中</view>
+        <view class="rightState" wx:else style="color:red;">已分享{{item.shared}}</view>
+
+
+  </view>
 </view>
 
 <!--

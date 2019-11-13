@@ -1,6 +1,6 @@
 <!--<view class="img"><image src="../../images/img1.png"/></view>-->
     <view class="simg clearfix" ><image style="width:100%" src="../../images/banner.png"/></view>
-    
+    <view class="flex-wrp" style="flex-direction:row;">
 <button bindtap="gymList" class="left" style="background-image: url('https://6d65-meeu-0624-1259514512.tcb.qcloud.la/img1.png?sign=679d3f9b32ad1f6cecfb78f1ab7d83ce&t=1570721361'); background-size: 100% 100%;">
 
   <view class="ico1">
@@ -15,4 +15,7 @@
   </view>
   <view class="ti">我的信息</view>
 </button>
- <button bindtap="huijiMenu" class="mbtn mt10"><a href="#" class="btn">会籍菜单</a></button>
+ </view>
+ <view style="height:150rpx;"/>
+  <button bindtap="huijiMenu" wx:if = "{{huiji!=0}}" class="mbtn mt10"><a href="#" class="btn">会籍菜单</a></button>
+  <button bindtap="toGuildDungeon" class="mbtn mt10"><a href="#" class="btn">TEST</a></button>

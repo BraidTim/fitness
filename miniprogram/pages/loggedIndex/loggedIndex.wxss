@@ -2,7 +2,6 @@
 /* CSS Document */
 /* webkit*/
 .left {
-    float: left;
     width: 45%;
     height: 150px;
     margin-left: 2.5%;
@@ -11,7 +10,6 @@
     
 }
 .right {
-    margin-left: 52.5%;
     width: 45%;
         height: 150px;
     margin-top: 2.5%;
@@ -30,3 +28,4 @@
 -webkit-border-radius:100px;
 border-radius:100px;
 }
+.flex-wrp {display: flex;width: 100%;height:200rpx;}

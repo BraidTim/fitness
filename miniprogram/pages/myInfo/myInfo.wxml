@@ -55,7 +55,7 @@
       <view class="gray9">{{item.buyDate}}</view>
     </view>
     <view class="rightState" wx:if="{{item.useState == 0}}" style="color:green;">未使用</view>
-    <view class="rightState" wx:else="{{item.useState == 1}}" style="color:yellow;">已使用</view>
+    <view class="rightState" wx:else="{{item.useState == 1}}" style="color:red;">已使用</view>
 
   </view>
 

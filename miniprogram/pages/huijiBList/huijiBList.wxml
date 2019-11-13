@@ -1,0 +1,21 @@
+<view class="cur" >
+
+
+  <view >
+    <view >----体验者------购买日期--------状态---</view>
+  </view>
+
+
+</view>
+<view class="cur" wx:for="{{BList}}" data-hi="{{index}}" bindtap="toB">
+
+
+  <view class="middleText2">
+    <view class="gray9">{{item.phoneNumber}}--{{item.buyDate}}</view>
+  </view>
+  <view class="rightState" wx:if="{{item.useState == 0}}" style="color:green;">未使用</view>
+  <view class="rightState" wx:elif="{{item.useState == 1}}" style="color:blue;">已使用</view>
+  <view class="rightState" wx:else style="color:red;">已过期</view>
+
+
+</view>

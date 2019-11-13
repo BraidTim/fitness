@@ -52,6 +52,10 @@ var myrequest = function(event) {
       if (keys.indexOf("orderId") > -1) {
         tempData.orderId = event.orderId
       }
+      if (keys.indexOf("name") > -1) {
+        tempData.name = event.name
+      }
+
       if (keys.indexOf("phoneNumber") > -1) {
         tempData.phoneNumber = event.phoneNumber
       }
@@ -66,6 +70,9 @@ var myrequest = function(event) {
       }
       if (keys.indexOf("useState") > -1) {
         tempData.useState = event.useState
+      }
+      if (keys.indexOf("dungeon") > -1) {
+        tempData.dungeon = event.dungeon
       }
       console.log(tempData)
       console.log(newValue)
@@ -121,16 +128,24 @@ var myrequest = function(event) {
       // }
       if (keys.indexOf("include") > -1) {
         include = 1
-        tempData.inviteCode = db.command.in(event.inviteCode) 
+        if (keys.indexOf("inviteCode") > -1) {
+          tempData.inviteCode = db.command.in(event.inviteCode) 
+        }
+        if (keys.indexOf("phoneNumber") > -1) {
+
+          tempData.phoneNumber = db.command.in(event.phoneNumber) 
+        }
 
       }else{
         if (keys.indexOf("inviteCode") > -1) {
           tempData.inviteCode = event.inviteCode
         }
+        if (keys.indexOf("phoneNumber") > -1) {
+          tempData.phoneNumber = event.phoneNumber
+        }
       }
-      if (keys.indexOf("phoneNumber") > -1) {
-        tempData.phoneNumber = event.phoneNumber
-      }
+      
+      
       
       if (keys.indexOf("gym") > -1) {
         tempData.gym = event.gym

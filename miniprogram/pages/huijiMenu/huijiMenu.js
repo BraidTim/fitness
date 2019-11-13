@@ -6,9 +6,28 @@ Page({
    * 页面的初始数据
    */
   data: {
+    huijiInfo:{},
     AList: [],
     icon:false,
 
+  },
+  toB:function(event){
+    console.log("------AList------")
+    console.log(this.data.AList)
+    console.log("------toB------")
+    console.log(event.currentTarget.dataset.hi)
+    app.globalData.tempBList = this.data.AList[event.currentTarget.dataset.hi].BList
+    console.log("--global BList--")
+    console.log(app.globalData.tempBList)
+    wx.navigateTo({
+      url: '/pages/huijiBList/huijiBList',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+      },
+      success: function (res) {
+
+      }
+    })
   },
   toLogin: function (event) {
     wx.navigateTo({
@@ -90,6 +109,7 @@ Page({
     var that = this
     this.setData({ icon: app.globalData.hasOwnProperty('phoneNumber') })
     if(this.data.icon==true){
+      
       wx.cloud.callFunction({
         name: "cloudDb",
         data: {
@@ -121,47 +141,34 @@ Page({
             //AList[i].BList=[]
             var index = "AList[" + i + "].BList"
             that.setData({ [index]: [] })
+            var index2 = "AList[" + i + "].shared"
+            that.setData({ [index2]: -1 })
           }
 
           console.log("-------inviteCodes-------:")
           console.log(inviteCodes)
-          console.log("---------------------------------")
+          console.log("------------gym---------------------")
+          console.log(app.globalData.huijiInfo)
+
+          var index2 = "AList[" + i + "].shared"
           wx.cloud.callFunction({
             name: "cloudDb",
             data: {
               method: "select",
-              datasetName: "buyInfo",
-              inviteCode: inviteCodes,
+              datasetName: "shareInfo",
+              phoneNumber: inviteCodes,
               include: 1
             },
             success: function (ress) {
-              console.log("-------Bres-------:")
+              console.log("-------shareres-------:")
               console.log(ress)
-              console.log("---------------------------------")
               for (var j = 0; j < ress.result.respond.data.length; j++) {
-                console.log("------AList length------")
-                console.log(that.data.AList)
                 var why = that.data.AList.length
                 for (var k = 0; k < why; k++) {
-                  console.log(k)
-                  console.log("------compare------")
-                  console.log(that.data.AList[k].phoneNumber)
-                  console.log(ress.result.respond.data[j].inviteCode)
 
-                  if (that.data.AList[k].phoneNumber == ress.result.respond.data[j].inviteCode) {
-                    console.log("------in AList length------")
-                    console.log(that.data.AList)
-                    var index = "AList[" + k + "].BList"
-                    var wtf = that.data.AList
-                    var wtff = wtf[k].BList
-                    console.log("------index wtf-----")
-                    console.log(index)
-                    console.log(k)
-                    console.log(wtf[k].BList)
-                    console.log(ress.result.respond.data[j])
-                    var tempList = wtff.push(ress.result.respond.data[j])
-                    console.log("---tp---")
-                    console.log(tempList)
+                  if (that.data.AList[k].phoneNumber == ress.result.respond.data[j].phoneNumber && app.globalData.huijiInfo.gym == ress.result.respond.data[j].gym) {
+                    var index2 = "AList[" + k + "].shared"
+                    that.setData({ [index2]: 0 })
                     // console.log("------tempList------")
                     // console.log(tempList)
                     // console.log(index)
@@ -169,17 +176,85 @@ Page({
                   }
                 }
               }
-              //temp[tempI] = ress.result.respond.data
-              // var tempA = that.data.AList[x]
+              wx.cloud.callFunction({
+                name: "cloudDb",
+                data: {
+                  method: "select",
+                  datasetName: "buyInfo",
+                  inviteCode: inviteCodes,
+                  //gym: app.globalData.huijiInfo.gym,
+                  include: 1
+                },
+                success: function (ress) {
+                  console.log("-------Bres-------:")
+                  console.log(ress)
+                  console.log("---------------------------------")
+                  for (var j = 0; j < ress.result.respond.data.length; j++) {
+                    console.log("------AList length------")
+                    console.log(that.data.AList)
+                    var why = that.data.AList.length
+                    for (var k = 0; k < why; k++) {
+                      // console.log(k)
+                      // //console.log(wtf[k].BList)
+                      // console.log(ress.result.respond.data[j])
+                      // var tempList = wtff.push(ress.result.respond.data[j])
+                      // console.log("---tp---")
+                      // console.log(tempList)
+                      // // console.log("------tempList------") 
+                      // // console.log(tempList) 
+                      // // console.log(index) 
+                      // // that.setData({ [index]: tempList}) 
+                      // console.log("------compare------")
+                      // console.log(that.data.AList[k].phoneNumber)
+                      // console.log(ress.result.respond.data[j].inviteCode)
 
-              // var index = "AList[" + x + "].BList"
-              // that.setData({
-              //   [index]: ress.result.respond.data
-              // })
-              console.log("------AList------")
-              console.log(that.data.AList)
+                      if (that.data.AList[k].phoneNumber == ress.result.respond.data[j].inviteCode) {
+                        console.log("------in AList length------")
+                        console.log(that.data.AList)
+                        var index = "AList[" + k + "].BList"
+                        var wtf = that.data.AList
+                        var wtff = wtf[k].BList
+                        console.log("------index wtf-----")
+                        console.log(index)
+                        console.log(k)
+                        console.log(wtf[k].BList)
+                        console.log(ress.result.respond.data[j])
+                        var tempList = wtff.push(ress.result.respond.data[j])
+                        console.log("---tp---")
+                        console.log(tempList)
+                        var index2 = "AList[" + k + "].shared"
+                        var currentShared = wtf[k].shared + 1
+                        console.log("---shared---")
+                        console.log(wtf[k].shared)
+                        that.setData({ [index2]: currentShared })
+                        // console.log("------tempList------") 
+                        // console.log(tempList) 
+                        // console.log(index) 
+                        // that.setData({ [index]: tempList}) 
+                      }
+                    }
+                  }
+                  //temp[tempI] = ress.result.respond.data 
+                  // var tempA = that.data.AList[x] 
+
+                  // var index = "AList[" + x + "].BList" 
+                  // that.setData({ 
+                  //   [index]: ress.result.respond.data 
+                  // }) 
+                  console.log("------AList------")
+                  console.log(that.data.AList)
+                }
+                //temp[tempI] = ress.result.respond.data 
+                // var tempA = that.data.AList[x] 
+
+                // var index = "AList[" + x + "].BList" 
+                // that.setData({ 
+                //   [index]: ress.result.respond.data 
+                // }) 
+              })
             }
           })
+          
           // while(1){
           //   var prepared = 1
           //   for (var i = 0; i < res.result.respond.data.length; i++) {

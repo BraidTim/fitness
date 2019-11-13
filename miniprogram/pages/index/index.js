@@ -151,6 +151,24 @@ Page({
               wx.cloud.callFunction({
                 name: "cloudDb",
                 data: {
+                  method: "select",
+                  datasetName: "huijiInfo",
+                  phoneNumber: app.globalData.phoneNumber
+                },
+                success: function (res) {
+                  if (res.result.respond.data.length != 0) {
+                    app.globalData.huijiInfo = res.result.respond.data[0]
+                    //that.setData({ huiji: 1 })
+                  }
+                  //that.setData({ huijiInfo: res.result.respond.data[0] })
+                  console.log("----huijiInfo-----")
+                  console.log(res)
+                  console.log(that.data.huijiInfo)
+                }
+              })
+              wx.cloud.callFunction({
+                name: "cloudDb",
+                data: {
                   datasetName: "memberList",
                   method: "select",
                   openid: app.globalData.openid

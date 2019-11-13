@@ -8,8 +8,13 @@ Page({
    */
   data: {
     image_address:'',
+    huiji:0,
   },
-
+  toGuildDungeon: function (res) {
+    wx.navigateTo({
+      url: '/pages/guildDungeon/guildDungeon',
+    })
+  },
   gymList:function(res){
     wx.navigateTo({
       url: '/pages/gymList/gymList',
@@ -29,6 +34,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    app.globalData.huijiInfo = 0
     var that = this
     that.setData({
       checkAuth: true
@@ -47,6 +53,24 @@ Page({
             success: res => {
               app.globalData.openid = JSON.parse(res.result.temp).openid
               app.globalData.sessionKey = JSON.parse(res.result.temp).session_key
+              wx.cloud.callFunction({
+                name: "cloudDb",
+                data: {
+                  method: "select",
+                  datasetName: "huijiInfo",
+                  phoneNumber: app.globalData.phoneNumber
+                },
+                success: function (res) {
+                  if (res.result.respond.data.length!=0){
+                    app.globalData.huijiInfo = res.result.respond.data[0]
+                    that.setData({ huiji: 1 })
+                  }
+                  //that.setData({ huijiInfo: res.result.respond.data[0] })
+                  console.log("----huijiInfo-----")
+                  console.log(res)
+                  console.log(that.data.huijiInfo)
+                }
+              })
               wx.cloud.callFunction({
                 name: "cloudDb",
                 data: {
