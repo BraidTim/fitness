@@ -35,12 +35,16 @@ Page({
     console.log("123123123")
     console.log(app.globalData)
     var today = new Date()
-    var month = today.getMonth()
+    var month = today.getMonth() + 1
     var pre = ''
+    var preD = ''
     if(month<10){
       pre = '0'
     }
-    var dateString = (today.getYear() + 1900).toString() + pre+today.getMonth().toString() + today.getDate().toString()
+    if (today.getDate() < 10) {
+      preD = '0'
+    }
+    var dateString = (today.getYear() + 1900).toString() + pre + (today.getMonth() + 1).toString() + preD + today.getDate().toString()
     wx.cloud.callFunction({
       name: 'cloudDb',
       data: {
@@ -94,33 +98,16 @@ Page({
           var today = new Date()
           var month = today.getMonth() + 1
           var pre = ''
+          var preD = ''
           if (month < 10) {
             pre = '0'
           }
-          var dateString = (today.getYear() + 1900).toString() + pre + (today.getMonth() + 1).toString() + today.getDate().toString()
+          if (today.getDate() < 10) {
+            preD = '0'
+          }
+          var dateString = (today.getYear() + 1900).toString() + pre + (today.getMonth() + 1).toString() + preD + today.getDate().toString()
           console.log(dateString)
-          wx.cloud.callFunction({
-            name: "cloudDb",
-            data: {
-              method: "insert",
-              datasetName: "buyInfo",
-              phoneNumber: app.globalData.phoneNumber,
-              gym: that.data.gymInfo.gymName,
-              gymAddress: that.data.gymInfo.gymAddress,
-              gymPhone: that.data.gymInfo.gymPhone,
-              gymLocation: that.data.gymInfo.gymLocation,
-              inviteCode: that.data.decodePhone,
-              orderId: res.result.orderId,
-              prepay_id: res.result.prepay_id,
-              payState: "0",
-              useState: "0",
-              huijiPhoneNumber: app.globalData.huijiPhoneNumberBuy,
-              buyDate: dateString,
-
-            },
-            success: res => {
-            }
-          })
+          
           wx.requestPayment({
             timeStamp: res.result.timeStamp,
             nonceStr: '5K8264ILTKCH16CQ2502SI8ZNMTM67VS',
@@ -128,27 +115,39 @@ Page({
             signType: 'MD5',
             paySign: res.result.paySign,
             success: res => {
-              console.log("!!!!!!!!!!!!!!orderId")
-              console.log(res)
-              wx.showToast({
-                title: '购买成功',
-              })
               wx.cloud.callFunction({
-                name: "message",
+                name: "cloudDb",
                 data: {
-                  openid: app.globalData.openid,
-                  prepay_id: prepay_id
+                  method: "insert",
+                  datasetName: "buyInfo",
+                  phoneNumber: app.globalData.phoneNumber,
+                  gym: that.data.gymInfo.gymName,
+                  gymAddress: that.data.gymInfo.gymAddress,
+                  gymPhone: that.data.gymInfo.gymPhone,
+                  gymLocation: that.data.gymInfo.gymLocation,
+                  inviteCode: that.data.decodePhone,
+                  orderId: orderIdTemp,
+                  prepay_id: prepay_id,
+                  payState: "1",
+                  useState: "0",
+                  huijiPhoneNumber: app.globalData.huijiPhoneNumberBuy,
+                  buyDate: dateString,
+
                 },
                 success: res => {
-                  console.log("message sent")
-                }
-              })
-              wx.cloud.callFunction({
-                name: "orderCheck",
-                data: {
-                  orderId: orderIdTemp
-                },
-                success: res => {
+                  wx.showToast({
+                    title: '购买成功',
+                  })
+                  wx.cloud.callFunction({
+                    name: "message",
+                    data: {
+                      openid: app.globalData.openid,
+                      prepay_id: prepay_id
+                    },
+                    success: res => {
+                      console.log("message sent")
+                    }
+                  })
                   wx.navigateTo({
                     url: '/pages/qrCode/qrCode?phoneNumber=' + app.globalData.phoneNumber,
                     events: {
@@ -161,8 +160,32 @@ Page({
                       //   inviteCode:that.data.inviteCode,pnhoneNumber:that.data.phoneNumber, gym:that.data.gym.value})
                     }
                   })
+                
                 }
               })
+              console.log("!!!!!!!!!!!!!!orderId")
+              console.log(res)
+              
+              // wx.cloud.callFunction({
+              //   name: "orderCheck",
+              //   data: {
+              //     orderId: orderIdTemp
+              //   },
+              //   success: res => {
+              //     wx.navigateTo({
+              //       url: '/pages/qrCode/qrCode?phoneNumber=' + app.globalData.phoneNumber,
+              //       events: {
+              //         // acceptDataFromOpenedPage: function (data) {
+              //         //   console.log(data)
+              //         // }
+              //       },
+              //       success: function (res) {
+              //         // res.eventChannel.emit('acceptDataFromOpenerPage', {
+              //         //   inviteCode:that.data.inviteCode,pnhoneNumber:that.data.phoneNumber, gym:that.data.gym.value})
+              //       }
+              //     })
+              //   }
+              // })
 
             }
           })
@@ -185,7 +208,10 @@ Page({
 
     console.log("gymDetail")
     console.log(options.gymInfo.replace("%26", "&").replace("%3F", "?").replace("%3D", "="))
-    this.setData({ gymInfo: JSON.parse(options.gymInfo.replace(/%26/g, "&").replace(/%3F/g, "?").replace(/%3D/g, "="))})
+      
+    var tempSet = JSON.parse(options.gymInfo.replace(/%26/g, "&").replace(/%3F/g, "?").replace(/%3D/g, "="))
+    tempSet.gymDetail = tempSet.gymDetail.replace(/钅/g, "\n").replace(/辶/g, "&emsp;&emsp;")
+    this.setData({ gymInfo: tempSet})
     // this.setData({ gymInfo.gymPhoto: JSON.parse(options.gymInfo).gymPhoto.replace(" % 26", /\&/g).replace(" % 3F", /\?/g).replace(" % 3D", /\=/g) })
 
 

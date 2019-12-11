@@ -54,7 +54,7 @@ Page({
   },
   tapBought:function(event){
     wx.navigateTo({
-      url: '/pages/qrCode/qrCode?phoneNumber=' + this.data.phoneNumber + "&gym=" + event.currentTarget.dataset.hi,
+      url: '/pages/qrCode/qrCode?orderId=' + event.currentTarget.dataset.hi,
       events: {
         // acceptDataFromOpenedPage: function (data) {
         //   console.log(data)

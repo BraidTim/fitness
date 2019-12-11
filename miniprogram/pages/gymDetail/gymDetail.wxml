@@ -17,7 +17,7 @@
     </swiper-item>   
   </block>  
 </swiper>
-  <text class="tit">{{gymInfo.gymDetail}}</text>
+  <text class="tit" decode="true">{{gymInfo.gymDetail}}</text>
 
   <view>{{gymInfo.info}}</view>
 

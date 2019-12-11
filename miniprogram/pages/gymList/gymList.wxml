@@ -31,7 +31,7 @@
   <view wx:if="{{icon==false}}" style="display:{{sellList}}"> 抱歉，您尚未登录......
   <view bindtap="toLogin" style="text-decoration:underline">点击登录</view>
   </view>
-
+<view wx:elif="{{gymListSellInfo == 0}}" style="display:{{sellList}}"> 查询中... </view>
   <view wx:elif="{{gymListSellInfo.length == 0}}" style="display:{{sellList}}"> 抱歉，您目前还不是健身房的会员！找不到可分享的健身房... </view>
 
 <view class="list" id="tapTest" data-hi="{{item.gymName}}" wx:for="{{gymListSellInfo}}" bindtap="clickGymSell" style="display:{{sellList}}">

@@ -1,7 +1,7 @@
 <!--miniprogram/pages/huijiMenu/huijiMenu.wxml-->
 <view class="flex-wrp" style="flex-direction:row;">
   <view wx:if="{{icon==false}}" class="leftImage">
-  <image src="../../images/emptyIcon.jpg" style='width:150rpx;height:150rpx;'/>
+    <image src="../../images/emptyIcon.jpg" style='width:150rpx;height:150rpx;' />
   </view>
   <view wx:else class="leftImage">
     <open-data type="userAvatarUrl" style='width:150rpx;height:150rpx;'></open-data>
@@ -35,27 +35,29 @@
   </view>
 
 </view>
-    <view class="buyHis" bindtap="showBuyHis"style="flex-direction:row;">
+<view class="buyHis" bindtap="shareSwitchButton" style="flex-direction:row;">
   <view class="leftIcon">
     <image src="../../images/ico9.png" style='width:50rpx;height:50rpx;' />
   </view>
   <view class="middleText">会员列表</view>
-  <view class="rightGoto">
-      <image src="../../images/top.png"  style='width:40rpx;height:40rpx;' />
+  <view class="rightGoto" >
+    <image src="../../images/top.png" style='width:40rpx;height:40rpx;' />
   </view>
 </view>
-<view class="buyHisList" style="display:{{dis}}">
-<view class="cur" wx:for="{{AList}}" data-hi="{{index}}" bindtap="toB">
+<view wx:if="{{shareSwitch==0}}" style="display:block">
+  <view class="buyHisList" style="display:{{dis}}">
+    <view class="cur" wx:for="{{AList}}" data-hi="{{index}}" bindtap="toB">
 
-    
-    <view class="middleText2">
-      <view class="gray9">{{item.name}}</view>
+
+      <view class="middleText2">
+        <view class="gray9">{{item.name}}</view>
+      </view>
+      <view class="rightState" wx:if="{{item.shared == -1}}" style="color:green;">未分享</view>
+      <view class="rightState" wx:elif="{{item.shared == 0}}" style="color:blue;">分享中</view>
+      <view class="rightState" wx:else style="color:red;">已分享{{item.shared}}</view>
+
+
     </view>
-    <view class="rightState" wx:if="{{item.shared == -1}}" style="color:green;">未分享</view>
-    <view class="rightState" wx:elif="{{item.shared == 0}}" style="color:blue;">分享中</view>
-        <view class="rightState" wx:else style="color:red;">已分享{{item.shared}}</view>
-
-
   </view>
 </view>
 

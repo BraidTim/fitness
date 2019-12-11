@@ -10,6 +10,11 @@ Page({
     image_address:'',
     huiji:0,
   },
+  introduce: function (res) {
+    wx.navigateTo({
+      url: '/pages/fitnessIntroduce/fitnessIntroduce',
+    })
+  },
   toGuildDungeon: function (res) {
     wx.navigateTo({
       url: '/pages/guildDungeon/guildDungeon',

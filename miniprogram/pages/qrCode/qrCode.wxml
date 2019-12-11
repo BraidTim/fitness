@@ -13,8 +13,8 @@
 <view class="main_block" bindtap="#">
 
 
-  <view wx:if="{{useState==0}}" class="ci">购买日期（14天内有效）：{{buyDate}}                待使用</view>
-  <view wx:if="{{useState==1}}" class="ci">购买日期（14天内有效）：{{buyDate}}                已过期</view>
+  <view wx:if="{{useState==0}}" class="ci">购买日期（14天内有效）：{{buyDate}}                <view style="color:green;">待使用</view></view>
+  <view wx:if="{{useState==1}}" class="ci">购买日期（14天内有效）：{{buyDate}}                <view style="color:green;">已失效</view></view>
 
 
 </view>

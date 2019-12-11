@@ -11,11 +11,12 @@ Page({
     payState:"waiting",
     useState:"waiting",
     gymAddress:"",
-    gymPhone:""
+    gymPhone:"",
+    orderId:"",
   },
   toCall: function () {
     wx.makePhoneCall({
-      phoneNumber: this.data.gymInfo.gymPhone //仅为示例，并非真实的电话号码
+      phoneNumber: this.data.gymPhone //仅为示例，并非真实的电话号码
     })
   },
   toMap: function () {
@@ -45,15 +46,14 @@ Page({
   },
   onLoad: function (option) {
     console.log(option)
-    this.setData({phoneNumber:option.phoneNumber.substring(0,11)})
+    this.setData({orderId:option.orderId})
     var that = this
     wx.cloud.callFunction({
       name: "cloudDb",
       data: {
         method: "select",
         datasetName: "buyInfo",
-        phoneNumber: app.globalData.phoneNumber,
-        gym:option.gym
+        orderId: option.orderId
       },
       success: res => {
         console.log(res)
@@ -73,6 +73,8 @@ Page({
 
           this.setData({ useState: res.result.respond.data[0].useState })
           this.setData({ buyDate: res.result.respond.data[0].buyDate })
+          this.setData({ gymPhone: res.result.respond.data[0].gymPhone })
+
 
 
           const eventChannel = this.getOpenerEventChannel()

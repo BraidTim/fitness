@@ -17,7 +17,8 @@
     "pages/map/map",
     "pages/huijiBList/huijiBList",
     "pages/guildDungeon/guildDungeon",
-    "pages/dungeonList/dungeonList"
+    "pages/dungeonList/dungeonList",
+    "pages/fitnessIntroduce/fitnessIntroduce"
   ],
   "window": {
     "backgroundColor": "#0000FF",

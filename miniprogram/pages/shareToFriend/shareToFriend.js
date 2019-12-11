@@ -119,7 +119,7 @@ Page({
     return {
       title: '共享健身',
       path: tempPath,
-      imageUrl: "/images/1.jpg",
+      imageUrl: "https://6d65-meeu-0624-1259514512.tcb.qcloud.la/haoran1.jpg?sign=fcaf620c8004d40d7db2f4993933cc1f&t=1576056770",
       success: (res) => {
         console.log("转发成功", res);
       },

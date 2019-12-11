@@ -9,7 +9,19 @@ Page({
     huijiInfo:{},
     AList: [],
     icon:false,
+    shareSwitch:0,
 
+  },
+  shareSwitchButton:function(event){
+    if (this.data.shareSwitch==1){
+      this.setData({
+        shareSwitch: 0
+      })
+    }else{
+      this.setData({
+        shareSwitch: 1
+      })
+    }
   },
   toB:function(event){
     console.log("------AList------")
@@ -43,14 +55,14 @@ Page({
   scanQRcode: function() {
     wx.scanCode({
       onlyFromCamera: true,
-      success(res) {
-        console.log(res)
+      success(ress) {
+        console.log(ress)
         wx.cloud.callFunction({
           name: "cloudDb",
           data: {
             method: "select",
             datasetName: "buyInfo",
-            orderId: res.result.replace(/"/g, '')
+            orderId: ress.result.replace(/"/g, '')
           },
           success: function(res) {
             console.log('---!!!---')
