@@ -5,14 +5,29 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    photo:"",
+    intro:"",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var that = this
+    wx.cloud.callFunction({
+      name: "cloudDb",
+      data: {
+        method: "select",
+        datasetName: "basicInfo"
+      },
+      success: function (res) {
+        
+        that.setData({ photo: res.result.respond.data[0].introPhoto })
+        that.setData({ intro: res.result.respond.data[0].introduce })
 
+       
+      }
+    })
   },
 
   /**
