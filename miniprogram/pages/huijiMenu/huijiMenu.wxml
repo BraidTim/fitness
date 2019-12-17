@@ -60,6 +60,9 @@
     </view>
   </view>
 </view>
+<view bindtap="toHome">
+<image class="floatIcon" src="../../images/home.png"/>
+</view>
 
 <!--
 <view>my A</view>

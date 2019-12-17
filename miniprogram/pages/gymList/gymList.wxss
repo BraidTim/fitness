@@ -142,3 +142,10 @@
   -webkit-border-radius: 100px;
   border-radius: 100px;
 }
+.floatIcon{
+  position: fixed;
+  width: 100rpx;
+  height: 100rpx;
+  bottom: 50rpx;
+  right: 50rpx
+}

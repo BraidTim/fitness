@@ -64,7 +64,10 @@
 
   </view>
 </view>
-
+ 
+<view bindtap="toHome">
+<image class="floatIcon" src="../../images/home.png"/>
+</view>
 
 
 <!--

@@ -22,6 +22,9 @@
     <button  class="shareButton" type="primary" open-type="share" data-name="pageShare" id="share">点击发送给好友</button>
 
 </view>
+<view bindtap="toHome">
+<image class="floatIcon" src="../../images/home.png"/>
+</view>
 
 <!--
 <view class="view">

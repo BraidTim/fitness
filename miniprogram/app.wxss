@@ -17,3 +17,10 @@ button:focus{
 button::after{
   border: none;
 }
+.floatIcon{
+  position: fixed;
+  width: 100rpx;
+  height: 100rpx;
+  bottom: 50rpx;
+  right: 50rpx
+}

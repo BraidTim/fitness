@@ -11,6 +11,17 @@ Page({
     icon:false,
     decodePhone:"",
   },
+  toHome: function (event) {
+    wx.navigateTo({
+      url: '/pages/loggedIndex/loggedIndex',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+      },
+      success: function (res) {
+
+      }
+    })
+  },
   toCall:function(){
     wx.makePhoneCall({
       phoneNumber: this.data.gymInfo.gymPhone //仅为示例，并非真实的电话号码
@@ -45,33 +56,70 @@ Page({
       preD = '0'
     }
     var dateString = (today.getYear() + 1900).toString() + pre + (today.getMonth() + 1).toString() + preD + today.getDate().toString()
+    
     wx.cloud.callFunction({
-      name: 'cloudDb',
+      name: "cloudDb",
       data: {
-        method: "insert",
+        method: "select",
         datasetName: "shareInfo",
-        phoneNumber: app.globalData.phoneNumber,
-        gym: that.data.gymInfo.gymName,
-        huijiPhoneNumber: app.globalData.huijiPhoneNumber,
-        shareDate: dateString,
-        shareState:1
+        phoneNumber: app.globalData.phoneNumber
       },
-      success: res => {
-        wx.showToast({
-          title: '分享成功',
-        })
-        that.setData({ shareToFriend: "分享" })
-        wx.navigateTo({
-          url: '/pages/shareToFriend/shareToFriend?inviteCode=' + app.globalData.phoneNumber + "&gym=" + that.data.gymInfo.name,
-          events: {
-            // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
-          },
-          success: function (res) {
+      success: function (res) {
+        if (res.result.respond.data.length != 0){
+          wx.showToast({
+            title: '已有分享记录！',
+            icon: "none",
+            duration: 2000,
+            success:res=>{
+              setTimeout(function () {
+                wx.navigateTo({
+                  url: '/pages/myInfo/myInfo',
+                  events: {
+                    // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+                  },
+                  success: function (res) {
 
-          }
-        })
+                  }
+                })
+              }, 1000) //延迟时间 这里是1秒
+              
+            }
+          })
+        }
+        else{
+          wx.cloud.callFunction({
+            name: 'cloudDb',
+            data: {
+              method: "insert",
+              datasetName: "shareInfo",
+              phoneNumber: app.globalData.phoneNumber,
+              gym: that.data.gymInfo.gymName,
+              huijiPhoneNumber: app.globalData.huijiPhoneNumber,
+              shareDate: dateString,
+              shareState: 1
+            },
+            success: res => {
+              wx.showToast({
+                title: '分享成功',
+                
+              })
+              that.setData({ shareToFriend: "分享" })
+              wx.navigateTo({
+                url: '/pages/shareToFriend/shareToFriend?inviteCode=' + app.globalData.phoneNumber + "&gym=" + that.data.gymInfo.name,
+                events: {
+                  // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+                },
+                success: function (res) {
+
+                }
+              })
+            }
+          })
+        }
       }
     })
+    
+    
   },
   buy: function (event) {
     if (!app.globalData.hasOwnProperty('phoneNumber')){

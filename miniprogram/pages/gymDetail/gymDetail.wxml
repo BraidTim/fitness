@@ -47,3 +47,6 @@
 <view wx:elif="{{icon==false}}" type="primary" bindtap="buy" class="btn">登录并体验</view>
 <view wx:else="{{type=='buy'}}" type="primary" bindtap="buy" class="btn">体验</view>
 <view  >注:为了增加分享者和体验者的积极性，体验需要少量费用，且该费用会全额返还给分享者</view>
+<view bindtap="toHome">
+<image class="floatIcon" src="../../images/home.png"/>
+</view>

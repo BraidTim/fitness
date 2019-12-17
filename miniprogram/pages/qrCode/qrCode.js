@@ -19,6 +19,17 @@ Page({
       phoneNumber: this.data.gymPhone //仅为示例，并非真实的电话号码
     })
   },
+  toHome: function (event) {
+    wx.navigateTo({
+      url: '/pages/loggedIndex/loggedIndex',
+      events: {
+        // 为指定事件添加一个监听器，获取被打开页面传送到当前页面的数据
+      },
+      success: function (res) {
+
+      }
+    })
+  },
   toMap: function () {
     wx.navigateTo({
       url: '/pages/map/map',

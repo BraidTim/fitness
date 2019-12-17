@@ -39,6 +39,10 @@
   <view style="clear:both;">
   </view>
 </view>
+<view bindtap="toHome">
+<image class="floatIcon" src="../../images/home.png"/>
+</view>
+
 <!--
 <view style="height:80rpx;"></view>
     <view class="mbtn mt20"><a href="#" class="btn" bindtap="backHome">返回首页</a></view>

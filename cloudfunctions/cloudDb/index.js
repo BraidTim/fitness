@@ -168,6 +168,9 @@ var myrequest = function(event) {
       if (keys.indexOf("huijiPhoneNumber") > -1) {
         tempData.huijiPhoneNumber = event.huijiPhoneNumber
       }
+      if (keys.indexOf("inviteCode") > -1) {
+        tempData.inviteCode = event.inviteCode
+      }
       if (keys.indexOf("openid") > -1) {
         tempData.openid = event.openid
         console.log("WTF_hidden_openId")

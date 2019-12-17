@@ -64,7 +64,7 @@
   <view class="leftIcon">
     <image src="../../images/ico5.png" style='width:50rpx;height:50rpx;' />
   </view>
-  <view class="middleText">分享历史</view>
+  <view class="middleText">分享历史(已成功分享{{sharedCount}}个)</view>
   <view class="rightGoto">
     <image src="../../images/top.png" style='width:40rpx;height:40rpx;' />
   </view>
@@ -89,6 +89,10 @@
   </view>
 
 </view>
+<view bindtap="toHome">
+<image class="floatIcon" src="../../images/home.png"/>
+</view>
+
 <!--
 <view class="allInfo">{{myInfo}}</view>
 <view bindtap="sharedList" class="list">sharedList</view>
