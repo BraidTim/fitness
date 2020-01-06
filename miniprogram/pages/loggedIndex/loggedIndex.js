@@ -35,6 +35,7 @@ Page({
       url: '/pages/huijiMenu/huijiMenu',
     })
   },
+  
   /**
    * 生命周期函数--监听页面加载
    */
@@ -56,59 +57,75 @@ Page({
               code: ress.code
             },
             success: res => {
+              console.log("!@!@!@!")
+              console.log(res)
               app.globalData.openid = JSON.parse(res.result.temp).openid
               app.globalData.sessionKey = JSON.parse(res.result.temp).session_key
               wx.cloud.callFunction({
                 name: "cloudDb",
                 data: {
                   method: "select",
-                  datasetName: "huijiInfo",
-                  phoneNumber: app.globalData.phoneNumber
-                },
-                success: function (res) {
-                  if (res.result.respond.data.length!=0){
-                    app.globalData.huijiInfo = res.result.respond.data[0]
-                    that.setData({ huiji: 1 })
-                  }
-                  //that.setData({ huijiInfo: res.result.respond.data[0] })
-                  console.log("----huijiInfo-----")
-                  console.log(res)
-                  console.log(that.data.huijiInfo)
-                }
-              })
-              wx.cloud.callFunction({
-                name: "cloudDb",
-                data: {
                   datasetName: "memberList",
-                  method: "select",
                   openid: app.globalData.openid
                 },
                 success: function (res) {
                   console.log(res)
-                  if (res.result.respond.data.length != 0) {
-                    app.globalData.phoneNumber = res.result.respond.data[0].phoneNumber
-                    app.globalData.huijiPhoneNumber = res.result.respond.data[0].huijiPhoneNumber
-                    app.globalData.myInfo = res.result.respond.data[0]
-                    // wx.navigateBack({
+                  app.globalData.phoneNumber = res.result.respond.data[0].phoneNumber
+                  wx.cloud.callFunction({
+                    name: "cloudDb",
+                    data: {
+                      method: "select",
+                      datasetName: "huijiInfo",
+                      phoneNumber: app.globalData.phoneNumber
+                    },
+                    success: function (res) {
+                      if (res.result.respond.data.length == 1) {
+                        app.globalData.huijiInfo = res.result.respond.data[0]
+                        that.setData({ huiji: 1 })
+                      }
+                      //that.setData({ huijiInfo: res.result.respond.data[0] })
+                      console.log("----huijiInfo-----")
+                      console.log(res)
+                      console.log(that.data.huijiInfo)
+                    }
+                  })
+                  wx.cloud.callFunction({
+                    name: "cloudDb",
+                    data: {
+                      datasetName: "memberList",
+                      method: "select",
+                      openid: app.globalData.openid
+                    },
+                    success: function (res) {
+                      console.log(res)
+                      if (res.result.respond.data.length != 0) {
+                        app.globalData.phoneNumber = res.result.respond.data[0].phoneNumber
+                        app.globalData.huijiPhoneNumber = res.result.respond.data[0].huijiPhoneNumber
+                        app.globalData.myInfo = res.result.respond.data[0]
+                        // wx.navigateBack({
 
-                    // })
-                    /*
-                    wx.navigateTo({
-                      url: '/pages/loggedIndex/loggedIndex',
-                    })
-                    */
-                  } else {
-                    that.setData({
-                      checkAuth: false
-                    })
-                    that.setData({
-                      checking: "没找到记录，如果是初次试用请授权！"
-                    })
+                        // })
+                        /*
+                        wx.navigateTo({
+                          url: '/pages/loggedIndex/loggedIndex',
+                        })
+                        */
+                      } else {
+                        that.setData({
+                          checkAuth: false
+                        })
+                        that.setData({
+                          checking: "没找到记录，如果是初次试用请授权！"
+                        })
 
-                    console.log(that.data)
-                  }
+                        console.log(that.data)
+                      }
+                    }
+                  })
                 }
               })
+
+              
             },
             fail: err => {
               console.log('fail decode')

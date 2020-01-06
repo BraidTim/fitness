@@ -4,10 +4,12 @@
     <view style="height:10rpx" />
 
     <view class="qrcode">
-      <!--<image src="../../images/fxerm.png" style="width:250rpx;height:250rpx;margin-top:10%;" />-->
+      <image src="../../images/qrcode.jpg" style="width:300rpx;height:300rpx;margin-top:5%;" />
+      <!--
       <view style="width:250rpx;height:250rpx;margin-top:20rpx;margin-left:170rpx;">
       <canvas class='canvas' canvas-id='canvas' ></canvas>
       </view>
+      -->
     </view>
     
     <view class="codeText" style="flex-direction:row;">

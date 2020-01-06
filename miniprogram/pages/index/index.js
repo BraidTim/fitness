@@ -37,7 +37,7 @@ Page({
       loadingBuy: false
     })
   },
-  getPhoneNumber(e) {
+  getPhoneNumber:function(e) {
     console.log(e)
     console.log("sessionKey")
     console.log(app.globalData.sessionKey)
